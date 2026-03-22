@@ -6,9 +6,9 @@
 
 ## The Problem
 
-AI coding tools are incredible at building fast. But the results often miss the mark. You describe what you want, the agent builds *something*, but it's not what you envisioned. The UI looks generic. Features get half-implemented. You spend as much time fixing and redirecting as you would have spent building.
+AI coding tools are incredible at building fast. But the results often miss the mark. You describe what you want, the agent builds _something_, but it's not what you envisioned. The UI looks generic. Features get half-implemented. You spend as much time fixing and redirecting as you would have spent building.
 
-**The core issue:** we're asking coding agents to figure out what to build *and* build it simultaneously. Design decisions get made on the fly, buried in code, impossible to adjust without starting over. There's no spec. No shared understanding. No source of truth for what "done" looks like.
+**The core issue:** we're asking coding agents to figure out what to build _and_ build it simultaneously. Design decisions get made on the fly, buried in code, impossible to adjust without starting over. There's no spec. No shared understanding. No source of truth for what "done" looks like.
 
 ## The Design OS Process
 
@@ -50,5 +50,6 @@ Read the [changelog](CHANGELOG.md)
 Created by Brian Casel, the creator of [Builder Methods](https://buildermethods.com), where Brian helps professional software developers and teams build with AI.
 
 Get Brian's free resources on building with AI:
+
 - [Builder Briefing newsletter](https://buildermethods.com)
 - [YouTube](https://youtube.com/@briancasel)

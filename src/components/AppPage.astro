@@ -1,0 +1,14 @@
+---
+import App from '@/App'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+interface Props {
+  title?: string
+}
+
+const { title = 'Design OS' } = Astro.props
+---
+
+<BaseLayout title={title}>
+  <App client:only="react" />
+</BaseLayout>

@@ -92,7 +92,7 @@ export function hasShellComponents(): boolean {
   console.log('[Shell] hasShellComponents check:', {
     exists,
     availableComponents: Object.keys(shellComponentModules),
-    lookingFor: '/src/shell/components/AppShell.tsx'
+    lookingFor: '/src/shell/components/AppShell.tsx',
   })
   return exists
 }
@@ -101,7 +101,7 @@ export function hasShellComponents(): boolean {
  * Load shell component dynamically
  */
 export function loadShellComponent(
-  componentName: string
+  componentName: string,
 ): (() => Promise<{ default: ComponentType }>) | null {
   const path = `/src/shell/components/${componentName}.tsx`
   return shellComponentModules[path] || null
@@ -112,15 +112,23 @@ export function loadShellComponent(
  * First tries to load ShellWrapper (designed for wrapping arbitrary content)
  * Falls back to AppShell if ShellWrapper doesn't exist
  */
-export function loadAppShell(): (() => Promise<{ default: ComponentType<{ children?: ReactNode }> }>) | null {
+export function loadAppShell():
+  | (() => Promise<{ default: ComponentType<{ children?: ReactNode }> }>)
+  | null {
   // First try ShellWrapper - a component specifically designed to wrap content
   const wrapperPath = '/src/shell/components/ShellWrapper.tsx'
   if (wrapperPath in shellComponentModules) {
-    return shellComponentModules[wrapperPath] as (() => Promise<{ default: ComponentType<{ children?: ReactNode }> }>)
+    return shellComponentModules[wrapperPath] as () => Promise<{
+      default: ComponentType<{ children?: ReactNode }>
+    }>
   }
   // Fall back to AppShell
   const path = '/src/shell/components/AppShell.tsx'
-  return shellComponentModules[path] as (() => Promise<{ default: ComponentType<{ children?: ReactNode }> }>) || null
+  return (
+    (shellComponentModules[path] as () => Promise<{
+      default: ComponentType<{ children?: ReactNode }>
+    }>) || null
+  )
 }
 
 /**

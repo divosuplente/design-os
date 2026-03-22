@@ -41,6 +41,7 @@ Stop here — the remaining steps below are for generating new data from scratch
 Check if `/product/data-shape/data-shape.md` exists.
 
 **If it exists:**
+
 - Read the file to understand the global entity definitions
 - Entity names in your sample data should match the global data shape
 - Use the descriptions and relationships as a guide
@@ -100,18 +101,17 @@ Example structure:
       "invoiceNumber": "INV-2024-001",
       "clientName": "Acme Corp",
       "clientEmail": "billing@acme.com",
-      "total": 1500.00,
+      "total": 1500.0,
       "status": "sent",
       "dueDate": "2024-02-15",
-      "lineItems": [
-        { "description": "Web Design", "quantity": 1, "rate": 1500.00 }
-      ]
+      "lineItems": [{ "description": "Web Design", "quantity": 1, "rate": 1500.0 }]
     }
   ]
 }
 ```
 
 The `_meta` descriptions should:
+
 - Use plain, non-technical language
 - Explain what each entity represents from the user's perspective
 - Describe relationships in terms of "contains", "belongs to", "links to" — these are conceptual, not database relationships
@@ -133,7 +133,6 @@ Generate TypeScript types based on the data structure.
    - Objects → Create a named interface
 
 2. **Use union types for status/enum fields:**
-
    - If a field like `status` has known values, use a union: `'draft' | 'sent' | 'paid' | 'overdue'`
 
    - Base this on the spec and the variety in sample data

@@ -42,7 +42,7 @@ function usePhaseStatuses(): PhaseInfo[] {
 
   const sectionIds = useMemo(() => getAllSectionIds(), [])
   const sectionsWithScreenDesigns = useMemo(() => {
-    return sectionIds.filter(id => getSectionScreenDesigns(id).length > 0).length
+    return sectionIds.filter((id) => getSectionScreenDesigns(id).length > 0).length
   }, [sectionIds])
   const hasSections = sectionsWithScreenDesigns > 0
 
@@ -54,7 +54,11 @@ function usePhaseStatuses(): PhaseInfo[] {
     currentPhaseId = 'product'
   } else if (currentPath === '/data-shape') {
     currentPhaseId = 'data-shape'
-  } else if (currentPath === '/design' || currentPath === '/design-system' || currentPath.startsWith('/shell')) {
+  } else if (
+    currentPath === '/design' ||
+    currentPath === '/design-system' ||
+    currentPath.startsWith('/shell')
+  ) {
     currentPhaseId = 'design'
   } else if (currentPath === '/sections' || currentPath.startsWith('/sections/')) {
     currentPhaseId = 'sections'
@@ -67,14 +71,14 @@ function usePhaseStatuses(): PhaseInfo[] {
 
   // Determine completion status
   const phaseComplete: Record<Phase, boolean> = {
-    'product': hasOverview && hasRoadmap,
+    product: hasOverview && hasRoadmap,
     'data-shape': hasDataShape,
-    'design': hasDesignSystem || hasShell,
-    'sections': hasSections,
-    'export': exportZipExists,
+    design: hasDesignSystem || hasShell,
+    sections: hasSections,
+    export: exportZipExists,
   }
 
-  return phases.map(phase => {
+  return phases.map((phase) => {
     const isComplete = phaseComplete[phase.id]
     let status: PhaseStatus
     if (phase.id === currentPhaseId) {
@@ -116,11 +120,12 @@ export function PhaseNav() {
               onClick={() => navigate(phase.path)}
               className={`
                 group relative flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 whitespace-nowrap
-                ${status === 'current'
-                  ? 'bg-stone-900 dark:bg-stone-100 text-stone-100 dark:text-stone-900 shadow-sm'
-                  : status === 'completed'
-                    ? 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
-                    : 'text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+                ${
+                  status === 'current'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-stone-100 dark:text-stone-900 shadow-sm'
+                    : status === 'completed'
+                      ? 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+                      : 'text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50'
                 }
               `}
             >
@@ -130,16 +135,24 @@ export function PhaseNav() {
                 }`}
                 strokeWidth={1.5}
               />
-              <span className={`text-sm font-medium hidden sm:inline ${
-                status === 'upcoming' ? 'opacity-60' : ''
-              }`}>
+              <span
+                className={`text-sm font-medium hidden sm:inline ${
+                  status === 'upcoming' ? 'opacity-60' : ''
+                }`}
+              >
                 {phase.label}
               </span>
 
               {/* Completion indicator - check circle at top-left (shows even when current) */}
               {isComplete && (
                 <span className="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-lime-500 flex items-center justify-center shadow-sm">
-                  <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <svg
+                    className="w-2.5 h-2.5 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={3}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </span>

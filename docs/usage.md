@@ -38,18 +38,18 @@ See [Export](export.md) for details on what's included and how to use it.
 
 ## Quick Reference
 
-| Command | Purpose |
-|---------|---------|
-| `/product-vision` | Define product overview, roadmap sections, and data shape |
-| `/design-tokens` | Choose colors and typography |
-| `/design-shell` | Design navigation and layout |
-| `/shape-section` | Define a section's scope, requirements, and generate sample data + types |
-| `/design-screen` | Create screen design components |
-| `/screenshot-design` | Capture screenshots |
-| `/export-product` | Generate the complete handoff package |
-| `/product-roadmap` | Update product sections (after initial creation) |
-| `/data-shape` | Update data entities (after initial creation) |
-| `/sample-data` | Update sample data and types (after initial creation) |
+| Command              | Purpose                                                                  |
+| -------------------- | ------------------------------------------------------------------------ |
+| `/product-vision`    | Define product overview, roadmap sections, and data shape                |
+| `/design-tokens`     | Choose colors and typography                                             |
+| `/design-shell`      | Design navigation and layout                                             |
+| `/shape-section`     | Define a section's scope, requirements, and generate sample data + types |
+| `/design-screen`     | Create screen design components                                          |
+| `/screenshot-design` | Capture screenshots                                                      |
+| `/export-product`    | Generate the complete handoff package                                    |
+| `/product-roadmap`   | Update product sections (after initial creation)                         |
+| `/data-shape`        | Update data entities (after initial creation)                            |
+| `/sample-data`       | Update sample data and types (after initial creation)                    |
 
 ## Tips
 

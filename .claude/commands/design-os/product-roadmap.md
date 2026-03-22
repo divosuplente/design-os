@@ -11,6 +11,7 @@ First, check if `/product/product-roadmap.md` exists.
 ## If Roadmap Already Exists (Updating)
 
 Read both:
+
 - `/product/product-overview.md`
 - `/product/product-roadmap.md`
 
@@ -47,11 +48,13 @@ Stop here if the product overview is missing.
 ### Analyze and Generate
 
 Read the product overview and analyze:
+
 - The core description
 - The problems being solved
 - The key features listed
 
 **Immediately proceed** to create `/product/product-roadmap.md` — do not present a draft for approval. Generate 3-5 sections that represent:
+
 - **Navigation items** - main areas of the product UI
 - **Roadmap phases** - logical order for building
 - **Self-contained feature areas** - each can be designed and built independently
@@ -64,12 +67,15 @@ Use this exact format:
 ## Sections
 
 ### 1. [Section Title]
+
 [One sentence description]
 
 ### 2. [Section Title]
+
 [One sentence description]
 
 ### 3. [Section Title]
+
 [One sentence description]
 ```
 

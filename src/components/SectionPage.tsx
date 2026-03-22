@@ -53,19 +53,14 @@ export function SectionPage() {
   const currentIndex = sections.findIndex((s) => s.id === sectionId)
 
   // Load section-specific data (spec, data.json, screen designs, screenshots)
-  const sectionData = useMemo(
-    () => (sectionId ? loadSectionData(sectionId) : null),
-    [sectionId]
-  )
+  const sectionData = useMemo(() => (sectionId ? loadSectionData(sectionId) : null), [sectionId])
 
   // Handle missing section
   if (!section) {
     return (
       <AppLayout backTo="/sections" backLabel="Sections">
         <div className="text-center py-12">
-          <p className="text-stone-600 dark:text-stone-400">
-            Section not found: {sectionId}
-          </p>
+          <p className="text-stone-600 dark:text-stone-400">Section not found: {sectionId}</p>
         </div>
       </AppLayout>
     )
@@ -86,9 +81,7 @@ export function SectionPage() {
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
             {section.title}
           </h1>
-          <p className="text-stone-600 dark:text-stone-400">
-            {section.description}
-          </p>
+          <p className="text-stone-600 dark:text-stone-400">{section.description}</p>
         </div>
 
         {/* Warning banner for incomplete prerequisite phases */}
@@ -128,13 +121,19 @@ export function SectionPage() {
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className="w-8 h-8 rounded-md bg-stone-200 dark:bg-stone-700 flex items-center justify-center shrink-0">
-                            <Layout className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
+                            <Layout
+                              className="w-4 h-4 text-stone-600 dark:text-stone-300"
+                              strokeWidth={1.5}
+                            />
                           </div>
                           <span className="font-medium text-stone-900 dark:text-stone-100 truncate">
                             {screenDesign.name}
                           </span>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500 shrink-0" strokeWidth={1.5} />
+                        <ChevronRight
+                          className="w-4 h-4 text-stone-400 dark:text-stone-500 shrink-0"
+                          strokeWidth={1.5}
+                        />
                       </Link>
                     </li>
                   ))}
@@ -151,7 +150,10 @@ export function SectionPage() {
               <CardContent className="py-8">
                 <div className="flex flex-col items-center text-center max-w-sm mx-auto">
                   <div className="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center mb-3">
-                    <Image className="w-5 h-5 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
+                    <Image
+                      className="w-5 h-5 text-stone-400 dark:text-stone-500"
+                      strokeWidth={1.5}
+                    />
                   </div>
                   <h3 className="text-base font-medium text-stone-600 dark:text-stone-400 mb-1">
                     No screenshots captured yet
@@ -227,7 +229,10 @@ export function SectionPage() {
                       <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
                       <span className="font-medium">Continue to {nextSection.title}</span>
                     </div>
-                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+                    <ArrowRight
+                      className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                      strokeWidth={1.5}
+                    />
                   </button>
                   <button
                     onClick={() => navigate('/sections')}
@@ -237,7 +242,10 @@ export function SectionPage() {
                       <LayoutList className="w-5 h-5" strokeWidth={1.5} />
                       <span className="font-medium">View All Sections</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+                    <ChevronRight
+                      className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                      strokeWidth={1.5}
+                    />
                   </button>
                 </>
               ) : (
@@ -250,7 +258,10 @@ export function SectionPage() {
                     <LayoutList className="w-5 h-5" strokeWidth={1.5} />
                     <span className="font-medium">Back to All Sections</span>
                   </div>
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+                  <ArrowRight
+                    className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                    strokeWidth={1.5}
+                  />
                 </button>
               )}
             </div>

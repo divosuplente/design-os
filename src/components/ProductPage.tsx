@@ -12,10 +12,7 @@ import { NextPhaseButton } from '@/components/NextPhaseButton'
  * Determine the status of each step on the Product page
  * Steps: 1. Product Vision, 2. Roadmap
  */
-function getProductPageStepStatuses(
-  hasOverview: boolean,
-  hasRoadmap: boolean
-): StepStatus[] {
+function getProductPageStepStatuses(hasOverview: boolean, hasRoadmap: boolean): StepStatus[] {
   const statuses: StepStatus[] = []
 
   // Step 1: Product Vision

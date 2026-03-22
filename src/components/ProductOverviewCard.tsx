@@ -48,15 +48,16 @@ export function ProductOverviewCard({ overview }: ProductOverviewCardProps) {
               <ul className="space-y-3 pt-2">
                 {overview.problems.map((problem, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <ArrowRight className="w-4 h-4 text-stone-900 dark:text-stone-100 mt-1 shrink-0" strokeWidth={2} />
+                    <ArrowRight
+                      className="w-4 h-4 text-stone-900 dark:text-stone-100 mt-1 shrink-0"
+                      strokeWidth={2}
+                    />
                     <div>
                       <span className="font-medium text-stone-800 dark:text-stone-200">
                         {problem.title}
                       </span>
                       <span className="text-stone-500 dark:text-stone-400 mx-2">—</span>
-                      <span className="text-stone-600 dark:text-stone-400">
-                        {problem.solution}
-                      </span>
+                      <span className="text-stone-600 dark:text-stone-400">{problem.solution}</span>
                     </div>
                   </li>
                 ))}
@@ -87,9 +88,7 @@ export function ProductOverviewCard({ overview }: ProductOverviewCardProps) {
                 {overview.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-stone-900 dark:bg-stone-100 mt-2 shrink-0" />
-                    <span className="text-stone-700 dark:text-stone-300">
-                      {feature}
-                    </span>
+                    <span className="text-stone-700 dark:text-stone-300">{feature}</span>
                   </li>
                 ))}
               </ul>

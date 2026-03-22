@@ -20,11 +20,13 @@ Define your product's core identity in one conversational flow. You'll establish
 Share any notes, ideas, or rough thoughts you have about what you're building. The AI will ask clarifying questions covering your vision, the main areas of your product, and the core things users will work with. Once it has enough information, it writes all three files automatically.
 
 **Creates:**
+
 - `product/product-overview.md` — Product description, problems/solutions, features
 - `product/product-roadmap.md` — 3-5 sections ordered by development priority
 - `product/data-shape/data-shape.md` — Core entities and relationships
 
 **To update individually later:**
+
 - `/product-roadmap` — Add, remove, or reorder sections
 - `/data-shape` — Add, remove, or update entities and relationships
 
@@ -77,6 +79,7 @@ You'll also define:
 The shell is implemented as React components that will wrap your section screen designs.
 
 **Creates:**
+
 - `product/shell/spec.md` — Shell specification
 - `src/shell/components/AppShell.tsx` — Main shell wrapper
 - `src/shell/components/MainNav.tsx` — Navigation component

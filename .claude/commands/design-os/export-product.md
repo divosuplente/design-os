@@ -7,11 +7,13 @@ You are helping the user export their complete product design as a handoff packa
 Verify the minimum requirements exist:
 
 **Required:**
+
 - `/product/product-overview.md` — Product overview
 - `/product/product-roadmap.md` — Sections defined
 - At least one section with screen designs in `src/sections/[section-id]/`
 
 **Recommended (show warning if missing):**
+
 - `/product/data-shape/data-shape.md` — Product entities
 - `/product/design-system/colors.json` — Color tokens
 - `/product/design-system/typography.json` — Typography tokens
@@ -20,6 +22,7 @@ Verify the minimum requirements exist:
 If required files are missing:
 
 "To export your product, you need at minimum:
+
 - A product overview (`/product-vision`)
 - A roadmap with sections (`/product-roadmap`)
 - At least one section with screen designs
@@ -31,6 +34,7 @@ Stop here if required files are missing.
 If recommended files are missing, show warnings but continue:
 
 "Note: Some recommended items are missing:
+
 - [ ] Product entities — Run `/data-shape` for consistent entity naming
 - [ ] Design tokens — Run `/design-tokens` for consistent styling
 - [ ] Application shell — Run `/design-shell` for navigation structure
@@ -118,7 +122,7 @@ Create `product-plan/product-overview.md`:
 
 1. **[Section 1]** — [Description]
 2. **[Section 2]** — [Description]
-...
+   ...
 
 ## Product Entities
 
@@ -128,11 +132,13 @@ Create `product-plan/product-overview.md`:
 ## Design System
 
 **Colors:**
+
 - Primary: [color or "Not defined"]
 - Secondary: [color or "Not defined"]
 - Neutral: [color or "Not defined"]
 
 **Typography:**
+
 - Heading: [font or "Not defined"]
 - Body: [font or "Not defined"]
 - Mono: [font or "Not defined"]
@@ -144,7 +150,7 @@ Build this product in milestones:
 1. **Shell** — Set up design tokens and application shell
 2. **[Section 1]** — [Brief description]
 3. **[Section 2]** — [Brief description]
-...
+   ...
 
 Each milestone has a dedicated instruction document in `product-plan/instructions/`.
 ```
@@ -225,6 +231,7 @@ Connect navigation to your routing:
 **User Menu:**
 
 The user menu expects:
+
 - User name
 - Avatar URL (optional)
 - Logout callback
@@ -232,6 +239,7 @@ The user menu expects:
 [If shell doesn't exist:]
 
 Design and implement your own application shell with:
+
 - Navigation for all sections
 - User menu
 - Responsive layout
@@ -273,6 +281,7 @@ Implement the [Section Title] feature — [brief description from roadmap].
 [One paragraph describing what this section enables users to do. Focus on the user's perspective and the value they get from this feature. Extract from spec.md overview.]
 
 **Key Functionality:**
+
 - [Bullet point 1 — e.g., "View a list of all projects with status indicators"]
 - [Bullet point 2 — e.g., "Create new projects with name, description, and due date"]
 - [Bullet point 3 — e.g., "Edit existing project details inline"]
@@ -297,12 +306,12 @@ The components expect these data shapes (see `types.ts` for full definitions):
 
 **Callback props:**
 
-| Callback | Triggered When |
-|----------|---------------|
-| `onView` | User clicks to view details |
-| `onEdit` | User clicks to edit |
-| `onDelete` | User clicks to delete |
-| `onCreate` | User clicks to create new |
+| Callback   | Triggered When              |
+| ---------- | --------------------------- |
+| `onView`   | User clicks to view details |
+| `onEdit`   | User clicks to edit         |
+| `onDelete` | User clicks to delete       |
+| `onCreate` | User clicks to create new   |
 
 [Adjust based on actual Props interface]
 
@@ -343,6 +352,7 @@ The components include empty state designs. Make sure to handle:
 ## Testing
 
 See `product-plan/sections/[section-id]/tests.md` for UI behavior test specs covering:
+
 - User flow success and failure paths
 - Empty state rendering
 - Component interactions and edge cases
@@ -378,6 +388,7 @@ Create `product-plan/instructions/one-shot-instructions.md` by combining all mil
 ## About This Handoff
 
 **What you're receiving:**
+
 - Finished UI designs (React components with full styling)
 - Product requirements and user flow specifications
 - Design system tokens (colors, typography)
@@ -385,6 +396,7 @@ Create `product-plan/instructions/one-shot-instructions.md` by combining all mil
 - Test specs focused on user-facing behavior
 
 **Your job:**
+
 - Integrate these components into your application
 - Wire up callback props to your routing and business logic
 - Replace sample data with real data from your backend
@@ -399,6 +411,7 @@ The components are props-based — they accept data and fire callbacks. How you 
 Each section includes a `tests.md` file with UI behavior test specs. These are **framework-agnostic** — adapt them to your testing setup.
 
 **For each section:**
+
 1. Read `product-plan/sections/[section-id]/tests.md`
 2. Write tests for key user flows (success and failure paths)
 3. Implement the feature to make tests pass
@@ -492,12 +505,12 @@ See `screenshot.png` for the target UI design.
 
 ## Callback Props
 
-| Callback | Triggered When |
-|----------|---------------|
-| `onView` | User clicks to view details |
-| `onEdit` | User clicks to edit |
-| `onDelete` | User clicks to delete |
-| `onCreate` | User clicks to create new |
+| Callback   | Triggered When              |
+| ---------- | --------------------------- |
+| `onView`   | User clicks to view details |
+| `onEdit`   | User clicks to edit         |
+| `onDelete` | User clicks to delete       |
+| `onCreate` | User clicks to create new   |
 
 [Adjust based on actual Props interface]
 ```
@@ -506,7 +519,7 @@ See `screenshot.png` for the target UI design.
 
 For each section, create `product-plan/sections/[section-id]/tests.md` with UI behavior test specs based on the section's spec, user flows, and UI design.
 
-```markdown
+````markdown
 # Test Specs: [Section Title]
 
 These test specs are **framework-agnostic**. Adapt them to your testing setup (Jest, Vitest, Playwright, Cypress, React Testing Library, etc.).
@@ -526,10 +539,12 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 #### Success Path
 
 **Setup:**
+
 - [Preconditions - what state the app should be in]
 - [Sample data to use - reference types from types.ts]
 
 **Steps:**
+
 1. User navigates to [page/route]
 2. User sees [specific UI element - be specific about labels, text]
 3. User clicks [specific button/link with exact label]
@@ -537,6 +552,7 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 5. User clicks [submit button with exact label]
 
 **Expected Results:**
+
 - [ ] [Specific UI change - e.g., "Success message appears: 'Item created'"]
 - [ ] [Data change - e.g., "New item appears in the list"]
 - [ ] [State change - e.g., "Form is cleared and reset"]
@@ -545,19 +561,23 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 #### Failure Path: [Specific Failure Scenario]
 
 **Steps:**
+
 1. [Same steps as success path, or modified steps]
 
 **Expected Results:**
+
 - [ ] [Error message - e.g., "Error message appears: 'Unable to save. Please try again.'"]
 - [ ] [UI state - e.g., "Form data is preserved, not cleared"]
 
 #### Failure Path: [Validation Error]
 
 **Steps:**
+
 1. User leaves [specific field] empty
 2. User clicks [submit button]
 
 **Expected Results:**
+
 - [ ] [Validation message - e.g., "Field shows error: 'Name is required'"]
 - [ ] [Form state - e.g., "Form is not submitted"]
 
@@ -576,9 +596,11 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 **Scenario:** User has no [primary records] yet (first-time or all deleted)
 
 **Setup:**
+
 - [Primary data collection] is empty (`[]`)
 
 **Expected Results:**
+
 - [ ] [Empty state message is visible - e.g., "Shows heading 'No projects yet'"]
 - [ ] [Helpful description - e.g., "Shows text 'Create your first project to get started'"]
 - [ ] [Primary CTA is visible - e.g., "Shows button 'Create Project'"]
@@ -589,10 +611,12 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 **Scenario:** A [parent record] exists but has no [child records] yet
 
 **Setup:**
+
 - [Parent record] exists with valid data
 - [Child records collection] is empty (`[]`)
 
 **Expected Results:**
+
 - [ ] [Parent renders correctly with its data]
 - [ ] [Child section shows empty state - e.g., "Shows 'No tasks yet' in the tasks panel"]
 - [ ] [CTA to add child record - e.g., "Shows 'Add Task' button"]
@@ -604,10 +628,12 @@ These test specs are **framework-agnostic**. Adapt them to your testing setup (J
 ### [Component Name]
 
 **Renders correctly:**
+
 - [ ] [Specific element is visible - e.g., "Displays item title 'Sample Item'"]
 - [ ] [Data display - e.g., "Shows formatted date 'Dec 12, 2025'"]
 
 **User interactions:**
+
 - [ ] [Click behavior - e.g., "Clicking 'Edit' button calls onEdit with item id"]
 - [ ] [Hover behavior - e.g., "Hovering row shows action buttons"]
 - [ ] [Keyboard - e.g., "Pressing Escape closes the modal"]
@@ -642,23 +668,25 @@ Use the data from `sample-data.json` or create variations:
 ```typescript
 // Populated state
 const mockItem = {
-  id: "test-1",
-  name: "Test Item",
+  id: 'test-1',
+  name: 'Test Item',
   // ... other fields from types.ts
-};
+}
 
-const mockItems = [mockItem, /* ... more items */];
+const mockItems = [mockItem /* ... more items */]
 
 // Empty states
-const mockEmptyList = [];
+const mockEmptyList = []
 
 const mockItemWithNoChildren = {
-  id: "test-1",
-  name: "Test Item",
+  id: 'test-1',
+  name: 'Test Item',
   children: [],
-};
+}
 ```
-```
+````
+
+````
 
 ### Guidelines for Writing tests.md
 
@@ -692,7 +720,7 @@ When generating tests.md for each section:
   --font-body: '[Body Font]', sans-serif;
   --font-mono: '[Mono Font]', monospace;
 }
-```
+````
 
 ### tailwind-colors.md
 
@@ -714,7 +742,7 @@ Neutral text: `text-[neutral]-600 dark:text-[neutral]-400`
 
 ### fonts.md
 
-```markdown
+````markdown
 # Typography Configuration
 
 ## Google Fonts Import
@@ -722,17 +750,22 @@ Neutral text: `text-[neutral]-600 dark:text-[neutral]-400`
 Add to your HTML `<head>` or CSS:
 
 ```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=[Heading+Font]&family=[Body+Font]&family=[Mono+Font]&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=[Heading+Font]&family=[Body+Font]&family=[Mono+Font]&display=swap"
+  rel="stylesheet"
+/>
 ```
+````
 
 ## Font Usage
 
 - **Headings:** [Heading Font]
 - **Body text:** [Body Font]
 - **Code/technical:** [Mono Font]
-```
+
+````
 
 ## Step 11: Generate Data Shapes Files
 
@@ -766,7 +799,7 @@ Each section includes its own `types.ts` with the full interface definitions:
 ## Combined Reference
 
 See `overview.ts` for all entity types aggregated in one file.
-```
+````
 
 ### data-shapes/overview.ts
 
@@ -819,6 +852,7 @@ Please carefully read and analyze the following files:
 2. **@product-plan/instructions/one-shot-instructions.md** — Complete implementation instructions for all milestones
 
 After reading these, also review:
+
 - **@product-plan/design-system/** — Color and typography tokens
 - **@product-plan/data-shapes/** — UI data contracts (the shapes of data the components expect)
 - **@product-plan/shell/** — Application shell components
@@ -836,7 +870,6 @@ Review all the provided files, then ask me clarifying questions about:
 Lastly, ask me if I have any additional notes for this implementation.
 
 Once I answer your questions, create a comprehensive implementation plan before coding.
-
 ```
 
 ### section-prompt.md
@@ -864,6 +897,7 @@ Please carefully read and analyze the following files:
 2. **@product-plan/instructions/incremental/NN-SECTION_ID.md** — Specific instructions for this section
 
 Also review the section assets:
+
 - **@product-plan/sections/SECTION_ID/README.md** — Feature overview and design intent
 - **@product-plan/sections/SECTION_ID/tests.md** — UI behavior test specs
 - **@product-plan/sections/SECTION_ID/components/** — React components to integrate
@@ -881,7 +915,6 @@ Review all the provided files, then ask me clarifying questions about:
 Lastly, ask me if I have any additional notes for this implementation.
 
 Once I answer your questions, proceed with implementation.
-
 ```
 
 ## Step 13: Generate README.md
@@ -896,15 +929,18 @@ This folder contains everything needed to implement [Product Name].
 ## What's Included
 
 **Ready-to-Use Prompts:**
+
 - `prompts/one-shot-prompt.md` — Prompt template for full implementation
 - `prompts/section-prompt.md` — Prompt template for section-by-section implementation
 
 **Instructions:**
+
 - `product-overview.md` — Product summary (provide with every implementation)
 - `instructions/one-shot-instructions.md` — All milestones combined for full implementation
 - `instructions/incremental/` — Milestone-by-milestone instructions (shell, then sections)
 
 **Design Assets:**
+
 - `design-system/` — Colors, fonts, design tokens
 - `data-shapes/` — UI data contracts (the shapes of data components expect)
 - `shell/` — Application shell components
@@ -957,12 +993,13 @@ The test specs are **framework-agnostic** — they describe WHAT to test (user-f
 
 ---
 
-*Generated by Design OS*
+_Generated by Design OS_
 ```
 
 ## Step 14: Copy Screenshots
 
 Copy any `.png` files from:
+
 - `product/shell/` → `product-plan/shell/`
 - `product/sections/[section-id]/` → `product-plan/sections/[section-id]/`
 
@@ -989,15 +1026,18 @@ Let the user know:
 **What's Included:**
 
 **Ready-to-Use Prompts:**
+
 - `prompts/one-shot-prompt.md` — Prompt for full implementation
 - `prompts/section-prompt.md` — Prompt template for section-by-section
 
 **Instructions:**
+
 - `product-overview.md` — Product summary (always provide with instructions)
 - `instructions/one-shot-instructions.md` — All milestones combined
 - `instructions/incremental/` — [N] milestone instructions (shell, then sections)
 
 **Design Assets:**
+
 - `design-system/` — Colors, fonts, tokens
 - `data-shapes/` — UI data contracts and combined type reference
 - `shell/` — Application shell components

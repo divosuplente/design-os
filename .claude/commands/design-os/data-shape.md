@@ -11,6 +11,7 @@ First, check if `/product/data-shape/data-shape.md` exists.
 ## If Data Shape Already Exists (Updating)
 
 Read:
+
 - `/product/data-shape/data-shape.md`
 - `/product/product-overview.md` (if it exists, for context)
 - `/product/product-roadmap.md` (if it exists, for context)
@@ -23,6 +24,7 @@ Present the current state and ask what to change:
 - **[Entity2]** — [Description]
 
 **Relationships:**
+
 - [Relationship 1]
 - [Relationship 2]
 
@@ -43,6 +45,7 @@ Stop here — the remaining steps below are for generating a new data shape from
 ### Check Prerequisites
 
 Read:
+
 1. `/product/product-overview.md` to understand what the product does
 2. `/product/product-roadmap.md` to understand the planned sections
 
@@ -57,6 +60,7 @@ Stop here if prerequisites are missing.
 Review the product overview and roadmap, then **immediately proceed** to create the data shape file — do not present a draft for approval.
 
 Identify:
+
 - **Entity names** — The main nouns (things users create, view, or manage)
 - **Plain-language descriptions** — What each entity represents
 - **Relationships** — How entities connect to each other
@@ -69,9 +73,11 @@ Create `/product/data-shape/data-shape.md` with this format:
 ## Entities
 
 ### [EntityName]
+
 [Plain-language description of what this entity represents and its purpose in the system.]
 
 ### [AnotherEntity]
+
 [Plain-language description.]
 
 [Add more entities as needed]
@@ -81,7 +87,7 @@ Create `/product/data-shape/data-shape.md` with this format:
 - [Entity1] has many [Entity2]
 - [Entity2] belongs to [Entity1]
 - [Entity3] belongs to both [Entity1] and [Entity2]
-[Add more relationships as needed]
+  [Add more relationships as needed]
 ```
 
 ### Confirm
@@ -89,9 +95,11 @@ Create `/product/data-shape/data-shape.md` with this format:
 "I've created your data shape at `/product/data-shape/data-shape.md`.
 
 **Entities defined:**
+
 - [List entities]
 
 **Relationships:**
+
 - [List key relationships]
 
 This provides a shared vocabulary for your screen designs. When you run `/sample-data`, it will reference these entities to ensure consistent naming across sections.

@@ -2,7 +2,13 @@
  * Product data loading and markdown parsing utilities
  */
 
-import type { ProductOverview, ProductRoadmap, Problem, Section, ProductData } from '@/types/product'
+import type {
+  ProductOverview,
+  ProductRoadmap,
+  Problem,
+  Section,
+  ProductData,
+} from '@/types/product'
 import { loadDataShape, hasDataShape } from './data-shape-loader'
 import { loadDesignSystem, hasDesignSystem } from './design-system-loader'
 import { loadShellInfo, hasShell } from './shell-loader'
@@ -67,11 +73,15 @@ export function parseProductOverview(md: string): ProductOverview | null {
     const description = descMatch?.[1]?.trim() || ''
 
     // Extract problems - ### Problem N: Title pattern
-    const problemsSection = normalizedMd.match(/## Problems & Solutions\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    const problemsSection = normalizedMd.match(
+      /## Problems & Solutions\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/,
+    )
     const problems: Problem[] = []
 
     if (problemsSection?.[1]) {
-      const problemMatches = [...problemsSection[1].matchAll(/### Problem \d+:\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |$)/g)]
+      const problemMatches = [
+        ...problemsSection[1].matchAll(/### Problem \d+:\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |$)/g),
+      ]
       for (const match of problemMatches) {
         problems.push({
           title: match[1].trim(),
@@ -129,7 +139,9 @@ export function parseProductRoadmap(md: string): ProductRoadmap | null {
     const normalizedMd = md.replace(/\r\n/g, '\n')
 
     // Match sections with pattern ### N. Title
-    const sectionMatches = [...normalizedMd.matchAll(/### (\d+)\.\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g)]
+    const sectionMatches = [
+      ...normalizedMd.matchAll(/### (\d+)\.\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g),
+    ]
 
     for (const match of sectionMatches) {
       const order = parseInt(match[1], 10)

@@ -25,9 +25,11 @@ Shape the core product definition:
 - **The main features** that make this possible
 
 **Important:** If the user hasn't already provided a product name, ask them:
+
 - "What would you like to call this product? (A short, memorable name)"
 
 Example questions (adapt based on their input):
+
 - "Who is the primary user of this product? Can you describe them?"
 - "What's the single biggest pain point you're addressing?"
 - "How do people currently solve this problem without your product?"
@@ -63,23 +65,27 @@ Create the file at `/product/product-overview.md` with this exact format:
 # [Product Name]
 
 ## Description
+
 [The finalized 1-3 sentence description]
 
 ## Problems & Solutions
 
 ### Problem 1: [Problem Title]
+
 [How the product solves it in 1-2 sentences]
 
 ### Problem 2: [Problem Title]
+
 [How the product solves it in 1-2 sentences]
 
 [Add more as needed, up to 5]
 
 ## Key Features
+
 - [Feature 1]
 - [Feature 2]
 - [Feature 3]
-[Add more as needed]
+  [Add more as needed]
 ```
 
 **Important:** The `# [Product Name]` heading at the top is required - this is what displays as the card title in the app.
@@ -94,16 +100,20 @@ Create `/product/product-roadmap.md` with this exact format:
 ## Sections
 
 ### 1. [Section Title]
+
 [One sentence description]
 
 ### 2. [Section Title]
+
 [One sentence description]
 
 ### 3. [Section Title]
+
 [One sentence description]
 ```
 
 Sections should be:
+
 - Ordered by development priority
 - Self-contained enough to design and build independently
 - 3-5 sections (ideal range)
@@ -119,9 +129,11 @@ Create `/product/data-shape/data-shape.md` with this format:
 ## Entities
 
 ### [EntityName]
+
 [Plain-language description of what this entity represents and its purpose in the system.]
 
 ### [AnotherEntity]
+
 [Plain-language description.]
 
 [Add more entities as needed]
@@ -131,7 +143,7 @@ Create `/product/data-shape/data-shape.md` with this format:
 - [Entity1] has many [Entity2]
 - [Entity2] belongs to [Entity1]
 - [Entity3] belongs to both [Entity1] and [Entity2]
-[Add more relationships as needed]
+  [Add more relationships as needed]
 ```
 
 Keep descriptions minimal — focus on what each entity represents, not every field it contains. Entity names should be singular (User, Invoice, Project — not Users, Invoices).
@@ -147,6 +159,7 @@ After all three files are created, present a summary:
 3. **Data Shape** — `product/data-shape/data-shape.md` ([N] entities)
 
 **Sections:**
+
 1. **[Section 1]** — [Description]
 2. **[Section 2]** — [Description]
 3. **[Section 3]** — [Description]

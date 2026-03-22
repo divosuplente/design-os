@@ -1,18 +1,40 @@
-import { FileText, Map, ClipboardList, Database, Layout, Package, Boxes, Palette, PanelLeft } from 'lucide-react'
+import {
+  FileText,
+  Map,
+  ClipboardList,
+  Database,
+  Layout,
+  Package,
+  Boxes,
+  Palette,
+  PanelLeft,
+} from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
-type EmptyStateType = 'overview' | 'roadmap' | 'spec' | 'data' | 'screen-designs' | 'data-shape' | 'design-system' | 'shell' | 'export'
+type EmptyStateType =
+  | 'overview'
+  | 'roadmap'
+  | 'spec'
+  | 'data'
+  | 'screen-designs'
+  | 'data-shape'
+  | 'design-system'
+  | 'shell'
+  | 'export'
 
 interface EmptyStateProps {
   type: EmptyStateType
 }
 
-const config: Record<EmptyStateType, {
-  icon: typeof FileText
-  title: string
-  command: string
-  description: string
-}> = {
+const config: Record<
+  EmptyStateType,
+  {
+    icon: typeof FileText
+    title: string
+    command: string
+    description: string
+  }
+> = {
   overview: {
     icon: FileText,
     title: 'No product defined yet',
@@ -47,7 +69,7 @@ const config: Record<EmptyStateType, {
     icon: Boxes,
     title: 'No data shape defined yet',
     command: '/data-shape',
-    description: 'Sketch out the general shape of your product\'s data',
+    description: "Sketch out the general shape of your product's data",
   },
   'design-system': {
     icon: Palette,
@@ -79,19 +101,11 @@ export function EmptyState({ type }: EmptyStateProps) {
           <div className="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center mb-3">
             <Icon className="w-5 h-5 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
           </div>
-          <h3 className="text-base font-medium text-stone-600 dark:text-stone-400 mb-1">
-            {title}
-          </h3>
-          <p className="text-sm text-stone-500 dark:text-stone-400 mb-4">
-            {description}
-          </p>
+          <h3 className="text-base font-medium text-stone-600 dark:text-stone-400 mb-1">{title}</h3>
+          <p className="text-sm text-stone-500 dark:text-stone-400 mb-4">{description}</p>
           <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5 w-full">
-            <p className="text-xs text-stone-500 dark:text-stone-400 mb-0.5">
-              Run in Claude Code:
-            </p>
-            <code className="text-sm font-mono text-stone-700 dark:text-stone-300">
-              {command}
-            </code>
+            <p className="text-xs text-stone-500 dark:text-stone-400 mb-0.5">Run in Claude Code:</p>
+            <code className="text-sm font-mono text-stone-700 dark:text-stone-300">{command}</code>
           </div>
         </div>
       </CardContent>

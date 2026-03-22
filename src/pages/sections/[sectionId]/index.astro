@@ -1,0 +1,11 @@
+---
+import AppPage from '@/components/AppPage.astro'
+import { getSectionIds } from '@/lib/astro-route-paths'
+
+export async function getStaticPaths() {
+  const sectionIds = await getSectionIds()
+  return sectionIds.map((sectionId) => ({ params: { sectionId } }))
+}
+---
+
+<AppPage />

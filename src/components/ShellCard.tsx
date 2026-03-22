@@ -50,9 +50,7 @@ export function ShellCard({ shell }: ShellCardProps) {
                 {shell.spec.navigationItems.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-stone-400 dark:bg-stone-500 mt-2 shrink-0" />
-                    <span className="text-stone-600 dark:text-stone-400">
-                      {item}
-                    </span>
+                    <span className="text-stone-600 dark:text-stone-400">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -69,13 +67,19 @@ export function ShellCard({ shell }: ShellCardProps) {
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-md bg-stone-200 dark:bg-stone-700 flex items-center justify-center">
-                  <Layout className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
+                  <Layout
+                    className="w-4 h-4 text-stone-600 dark:text-stone-300"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100">
                   View Shell Design
                 </span>
               </div>
-              <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
+              <ChevronRight
+                className="w-4 h-4 text-stone-400 dark:text-stone-500"
+                strokeWidth={1.5}
+              />
             </Link>
           </div>
         )}

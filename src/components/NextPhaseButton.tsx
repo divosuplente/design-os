@@ -6,11 +6,14 @@ interface NextPhaseButtonProps {
   nextPhase: Exclude<Phase, 'product'> // Can't navigate "next" to product since it's first
 }
 
-const phaseConfig: Record<Exclude<Phase, 'product'>, { label: string; icon: typeof FileText; path: string }> = {
+const phaseConfig: Record<
+  Exclude<Phase, 'product'>,
+  { label: string; icon: typeof FileText; path: string }
+> = {
   'data-shape': { label: 'Data Shape', icon: Boxes, path: '/data-shape' },
-  'design': { label: 'Design', icon: Layout, path: '/design' },
-  'sections': { label: 'Sections', icon: LayoutList, path: '/sections' },
-  'export': { label: 'Export', icon: Package, path: '/export' },
+  design: { label: 'Design', icon: Layout, path: '/design' },
+  sections: { label: 'Sections', icon: LayoutList, path: '/sections' },
+  export: { label: 'Export', icon: Package, path: '/export' },
 }
 
 export function NextPhaseButton({ nextPhase }: NextPhaseButtonProps) {
@@ -27,7 +30,10 @@ export function NextPhaseButton({ nextPhase }: NextPhaseButtonProps) {
         <Icon className="w-5 h-5" strokeWidth={1.5} />
         <span className="font-medium">Continue to {config.label}</span>
       </div>
-      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+      <ArrowRight
+        className="w-5 h-5 transition-transform group-hover:translate-x-1"
+        strokeWidth={1.5}
+      />
     </button>
   )
 }

@@ -42,7 +42,9 @@ export function parseDataShape(md: string): DataShape | null {
 
     if (entitiesSection?.[1]) {
       // Match ### EntityName followed by description
-      const entityMatches = [...entitiesSection[1].matchAll(/### ([^\n]+)\n+([\s\S]*?)(?=\n### |\n## |$)/g)]
+      const entityMatches = [
+        ...entitiesSection[1].matchAll(/### ([^\n]+)\n+([\s\S]*?)(?=\n### |\n## |$)/g),
+      ]
       for (const match of entityMatches) {
         entities.push({
           name: match[1].trim(),

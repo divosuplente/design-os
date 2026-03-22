@@ -1,6 +1,14 @@
 import { Suspense, useMemo, useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Maximize2, GripVertical, Layout, Smartphone, Tablet, Monitor } from 'lucide-react'
+import {
+  ArrowLeft,
+  Maximize2,
+  GripVertical,
+  Layout,
+  Smartphone,
+  Tablet,
+  Monitor,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { loadScreenDesignComponent, sectionUsesShell } from '@/lib/section-loader'
@@ -12,7 +20,10 @@ const MIN_WIDTH = 320
 const DEFAULT_WIDTH_PERCENT = 100
 
 export function ScreenDesignPage() {
-  const { sectionId, screenDesignName } = useParams<{ sectionId: string; screenDesignName: string }>()
+  const { sectionId, screenDesignName } = useParams<{
+    sectionId: string
+    screenDesignName: string
+  }>()
   const navigate = useNavigate()
   const [widthPercent, setWidthPercent] = useState(DEFAULT_WIDTH_PERCENT)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -157,7 +168,10 @@ export function ScreenDesignPage() {
           onMouseDown={handleMouseDown}
         >
           <div className="w-1 h-16 rounded-full bg-stone-300 dark:bg-stone-600 group-hover:bg-stone-400 dark:group-hover:bg-stone-500 transition-colors flex items-center justify-center">
-            <GripVertical className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={2} />
+            <GripVertical
+              className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              strokeWidth={2}
+            />
           </div>
         </div>
 
@@ -179,7 +193,10 @@ export function ScreenDesignPage() {
           onMouseDown={handleMouseDown}
         >
           <div className="w-1 h-16 rounded-full bg-stone-300 dark:bg-stone-600 group-hover:bg-stone-400 dark:group-hover:bg-stone-500 transition-colors flex items-center justify-center">
-            <GripVertical className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={2} />
+            <GripVertical
+              className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              strokeWidth={2}
+            />
           </div>
         </div>
       </div>
@@ -193,7 +210,10 @@ export function ScreenDesignPage() {
  * Wraps screen design in AppShell if shell components exist
  */
 export function ScreenDesignFullscreen() {
-  const { sectionId, screenDesignName } = useParams<{ sectionId: string; screenDesignName: string }>()
+  const { sectionId, screenDesignName } = useParams<{
+    sectionId: string
+    screenDesignName: string
+  }>()
 
   // Load screen design component
   const ScreenDesignComponent = useMemo(() => {
@@ -232,15 +252,19 @@ export function ScreenDesignFullscreen() {
     const loader = loadAppShell()
     console.log('[ScreenDesignFullscreen] AppShell loader:', loader)
     if (!loader) {
-      console.warn('[ScreenDesignFullscreen] hasShellComponents() returned true but loadAppShell() returned null')
+      console.warn(
+        '[ScreenDesignFullscreen] hasShellComponents() returned true but loadAppShell() returned null',
+      )
       return null
     }
 
     // Wrap the loader to provide default props to the shell
     return React.lazy(async () => {
       try {
-        const module = await loader() as Record<string, unknown>
-        const ShellComponent = (module?.default || module?.AppShell) as React.ComponentType<Record<string, unknown>>
+        const module = (await loader()) as Record<string, unknown>
+        const ShellComponent = (module?.default || module?.AppShell) as React.ComponentType<
+          Record<string, unknown>
+        >
 
         if (typeof ShellComponent !== 'function') {
           console.warn('[ScreenDesignFullscreen] AppShell does not have a valid export')
@@ -254,22 +278,25 @@ export function ScreenDesignFullscreen() {
           const specNavItems = shellInfo?.spec?.navigationItems || []
 
           // Parse navigation items from spec (format: "**Label** → Description")
-          const navigationItems = specNavItems.length > 0
-            ? specNavItems.map((item, index) => {
-                // Extract label from **Label** format
-                const labelMatch = item.match(/\*\*([^*]+)\*\*/)
-                const label = labelMatch ? labelMatch[1] : item.split('→')[0]?.trim() || `Item ${index + 1}`
-                return {
-                  label,
-                  href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
-                  isActive: index === 0,
-                }
-              })
-            : [
-                { label: 'Dashboard', href: '/', isActive: true },
-                { label: 'Items', href: '/items' },
-                { label: 'Settings', href: '/settings' },
-              ]
+          const navigationItems =
+            specNavItems.length > 0
+              ? specNavItems.map((item, index) => {
+                  // Extract label from **Label** format
+                  const labelMatch = item.match(/\*\*([^*]+)\*\*/)
+                  const label = labelMatch
+                    ? labelMatch[1]
+                    : item.split('→')[0]?.trim() || `Item ${index + 1}`
+                  return {
+                    label,
+                    href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
+                    isActive: index === 0,
+                  }
+                })
+              : [
+                  { label: 'Dashboard', href: '/', isActive: true },
+                  { label: 'Items', href: '/items' },
+                  { label: 'Settings', href: '/settings' },
+                ]
 
           const defaultUser = {
             name: 'Demo User',

@@ -22,7 +22,8 @@ export function DataShapePage() {
             Data Shape
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Sketch out the general shape of your product's data — the core entities and how they relate.
+            Sketch out the general shape of your product's data — the core entities and how they
+            relate.
           </p>
         </div>
 
@@ -83,9 +84,7 @@ export function DataShapePage() {
                       {dataShape.relationships.map((relationship, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <span className="w-1.5 h-1.5 rounded-full bg-stone-400 dark:bg-stone-500 mt-2 shrink-0" />
-                          <span className="text-stone-700 dark:text-stone-300">
-                            {relationship}
-                          </span>
+                          <span className="text-stone-700 dark:text-stone-300">{relationship}</span>
                         </li>
                       ))}
                     </ul>

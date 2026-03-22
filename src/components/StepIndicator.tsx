@@ -27,9 +27,7 @@ export function StepIndicator({ step, status, children, isLast = false }: StepIn
       </div>
 
       {/* Card content with left padding to accommodate the step indicator */}
-      <div className="pl-10">
-        {children}
-      </div>
+      <div className="pl-10">{children}</div>
     </div>
   )
 }
@@ -40,11 +38,14 @@ interface StepBadgeProps {
 }
 
 function StepBadge({ step, status }: StepBadgeProps) {
-  const baseClasses = "w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-200"
+  const baseClasses =
+    'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-200'
 
   if (status === 'completed') {
     return (
-      <div className={`${baseClasses} bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400`}>
+      <div
+        className={`${baseClasses} bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400`}
+      >
         <Check className="w-3 h-3" strokeWidth={2.5} />
       </div>
     )
@@ -52,7 +53,9 @@ function StepBadge({ step, status }: StepBadgeProps) {
 
   if (status === 'current') {
     return (
-      <div className={`${baseClasses} bg-stone-900 dark:bg-stone-100 text-stone-100 dark:text-stone-900 shadow-sm`}>
+      <div
+        className={`${baseClasses} bg-stone-900 dark:bg-stone-100 text-stone-100 dark:text-stone-900 shadow-sm`}
+      >
         <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
       </div>
     )
@@ -60,7 +63,9 @@ function StepBadge({ step, status }: StepBadgeProps) {
 
   if (status === 'skipped') {
     return (
-      <div className={`${baseClasses} bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400`}>
+      <div
+        className={`${baseClasses} bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400`}
+      >
         <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
       </div>
     )
@@ -68,7 +73,9 @@ function StepBadge({ step, status }: StepBadgeProps) {
 
   // upcoming
   return (
-    <div className={`${baseClasses} bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400`}>
+    <div
+      className={`${baseClasses} bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400`}
+    >
       {step}
     </div>
   )

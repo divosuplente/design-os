@@ -62,9 +62,7 @@ export function AppLayout({
             /* Main page header with phase nav - full width */
             <div className="flex items-center justify-between gap-4">
               {/* Theme Toggle on left for balance */}
-              <div className="w-10 shrink-0">
-                {/* Empty spacer for balance */}
-              </div>
+              <div className="w-10 shrink-0">{/* Empty spacer for balance */}</div>
 
               {/* Phase Navigation - centered */}
               {showPhaseNav && (
@@ -83,9 +81,7 @@ export function AppLayout({
       </header>
 
       {/* Main content */}
-      <main className="flex-1 max-w-3xl mx-auto px-6 py-12 w-full">
-        {children}
-      </main>
+      <main className="flex-1 max-w-3xl mx-auto px-6 py-12 w-full">{children}</main>
 
       {/* Footer with logo */}
       <footer className="py-8 flex justify-center">

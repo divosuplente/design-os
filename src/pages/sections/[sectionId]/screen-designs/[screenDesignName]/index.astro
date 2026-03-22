@@ -1,0 +1,13 @@
+---
+import AppPage from '@/components/AppPage.astro'
+import { getScreenDesignPaths } from '@/lib/astro-route-paths'
+
+export async function getStaticPaths() {
+  const screenDesignPaths = await getScreenDesignPaths()
+  return screenDesignPaths.map(({ sectionId, screenDesignName }) => ({
+    params: { sectionId, screenDesignName },
+  }))
+}
+---
+
+<AppPage />

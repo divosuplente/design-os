@@ -20,7 +20,9 @@ export function PhaseWarningBanner() {
   const [isDismissed, setIsDismissed] = useState(true) // Start dismissed to avoid flash
 
   const hasDataShape = !!productData.dataShape
-  const hasDesignSystem = !!(productData.designSystem?.colors || productData.designSystem?.typography)
+  const hasDesignSystem = !!(
+    productData.designSystem?.colors || productData.designSystem?.typography
+  )
   const hasShell = !!productData.shell?.spec
   const hasDesign = hasDesignSystem || hasShell
 
@@ -55,17 +57,17 @@ export function PhaseWarningBanner() {
   return (
     <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 mb-6">
       <div className="flex items-start gap-3">
-        <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" strokeWidth={2} />
+        <AlertTriangle
+          className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"
+          strokeWidth={2}
+        />
         <div className="flex-1 min-w-0">
           <p className="text-sm text-amber-800 dark:text-amber-200">
             Consider completing{' '}
             {missingPhases.map((phase, index) => (
               <span key={phase.path}>
                 {index > 0 && ' and '}
-                <Link
-                  to={phase.path}
-                  className="font-medium underline hover:no-underline"
-                >
+                <Link to={phase.path} className="font-medium underline hover:no-underline">
                   {phase.name}
                 </Link>
               </span>

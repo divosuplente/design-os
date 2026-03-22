@@ -1,6 +1,14 @@
 import { Suspense, useMemo, useState, useRef, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, PanelLeft, Maximize2, GripVertical, Smartphone, Tablet, Monitor } from 'lucide-react'
+import {
+  ArrowLeft,
+  PanelLeft,
+  Maximize2,
+  GripVertical,
+  Smartphone,
+  Tablet,
+  Monitor,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { loadShellPreview } from '@/lib/shell-loader'
@@ -144,7 +152,10 @@ export function ShellDesignPage() {
           onMouseDown={handleMouseDown}
         >
           <div className="w-1 h-16 rounded-full bg-stone-300 dark:bg-stone-600 group-hover:bg-stone-400 dark:group-hover:bg-stone-500 transition-colors flex items-center justify-center">
-            <GripVertical className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={2} />
+            <GripVertical
+              className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              strokeWidth={2}
+            />
           </div>
         </div>
 
@@ -166,7 +177,10 @@ export function ShellDesignPage() {
           onMouseDown={handleMouseDown}
         >
           <div className="w-1 h-16 rounded-full bg-stone-300 dark:bg-stone-600 group-hover:bg-stone-400 dark:group-hover:bg-stone-500 transition-colors flex items-center justify-center">
-            <GripVertical className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={2} />
+            <GripVertical
+              className="w-3 h-3 text-stone-500 dark:text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              strokeWidth={2}
+            />
           </div>
         </div>
       </div>

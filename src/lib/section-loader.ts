@@ -193,7 +193,7 @@ export function getSectionScreenshots(sectionId: string): ScreenshotInfo[] {
  */
 export function loadScreenDesignComponent(
   sectionId: string,
-  screenDesignName: string
+  screenDesignName: string,
 ): (() => Promise<{ default: ComponentType }>) | null {
   const path = `/src/sections/${sectionId}/${screenDesignName}.tsx`
   return screenDesignModules[path] || null

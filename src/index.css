@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -10,10 +10,10 @@
 */
 @theme {
   /* Font families - DM Sans for clean, geometric type */
-  --font-display: "DM Sans", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 /* Shadcn theme integration */
@@ -72,13 +72,13 @@
   --primary: oklch(0.216 0.006 56.043); /* stone-900 */
   --primary-foreground: oklch(0.985 0.001 106.424); /* stone-50 */
   /* Secondary - Stone light */
-  --secondary: oklch(0.970 0.001 106.424); /* stone-100 */
+  --secondary: oklch(0.97 0.001 106.424); /* stone-100 */
   --secondary-foreground: oklch(0.216 0.006 56.043); /* stone-900 */
   /* Muted - Stone for subdued text */
-  --muted: oklch(0.970 0.001 106.424); /* stone-100 */
+  --muted: oklch(0.97 0.001 106.424); /* stone-100 */
   --muted-foreground: oklch(0.444 0.011 73.639); /* stone-600 #57534E */
   /* Accent - Lime green for subtle pops */
-  --accent: oklch(0.970 0.001 106.424); /* stone-100 */
+  --accent: oklch(0.97 0.001 106.424); /* stone-100 */
   --accent-foreground: oklch(0.216 0.006 56.043); /* stone-900 */
   /* Destructive - Rose */
   --destructive: oklch(0.586 0.253 17.585); /* rose-600 */
@@ -97,7 +97,7 @@
   --sidebar-foreground: oklch(0.216 0.006 56.043); /* stone-900 */
   --sidebar-primary: oklch(0.216 0.006 56.043); /* stone-900 */
   --sidebar-primary-foreground: oklch(0.985 0.001 106.424); /* stone-50 */
-  --sidebar-accent: oklch(0.970 0.001 106.424); /* stone-100 */
+  --sidebar-accent: oklch(0.97 0.001 106.424); /* stone-100 */
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043); /* stone-900 */
   --sidebar-border: oklch(0.923 0.003 48.717); /* stone-200 */
   --sidebar-ring: oklch(0.553 0.013 58.071); /* stone-500 */
@@ -129,8 +129,8 @@
   /* Destructive - Rose lighter for dark mode */
   --destructive: oklch(0.712 0.194 13.428); /* rose-400 */
   /* Borders & Inputs - Stone dark */
-  --border: oklch(0.370 0.010 67.558); /* stone-600 */
-  --input: oklch(0.370 0.010 67.558); /* stone-600 */
+  --border: oklch(0.37 0.01 67.558); /* stone-600 */
+  --input: oklch(0.37 0.01 67.558); /* stone-600 */
   --ring: oklch(0.553 0.013 58.071); /* stone-500 */
   /* Chart colors - brighter for dark mode */
   --chart-1: oklch(0.648 0.2 131.684); /* lime-500 */
@@ -145,7 +145,7 @@
   --sidebar-primary-foreground: oklch(0.216 0.006 56.043); /* stone-900 */
   --sidebar-accent: oklch(0.318 0.008 43.185); /* stone-700 */
   --sidebar-accent-foreground: oklch(0.985 0.001 106.424); /* stone-50 */
-  --sidebar-border: oklch(0.370 0.010 67.558); /* stone-600 */
+  --sidebar-border: oklch(0.37 0.01 67.558); /* stone-600 */
   --sidebar-ring: oklch(0.553 0.013 58.071); /* stone-500 */
 }
 
@@ -157,11 +157,18 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     @apply font-semibold tracking-tight;
   }
-  code, pre, kbd {
+  code,
+  pre,
+  kbd {
     font-family: var(--font-mono);
   }
 }

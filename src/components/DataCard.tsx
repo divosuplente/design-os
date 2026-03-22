@@ -74,10 +74,7 @@ export function DataCard({ data }: DataCardProps) {
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {Object.entries(meta.models).map(([modelName, description]) => (
-                  <div
-                    key={modelName}
-                    className="bg-stone-50 dark:bg-stone-800/50 rounded-lg p-4"
-                  >
+                  <div key={modelName} className="bg-stone-50 dark:bg-stone-800/50 rounded-lg p-4">
                     <h3 className="font-semibold text-stone-900 dark:text-stone-100 mb-1">
                       {modelName}
                     </h3>

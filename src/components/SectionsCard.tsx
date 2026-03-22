@@ -36,7 +36,10 @@ export function SectionsCard({ roadmap, onSectionClick }: SectionsCardProps) {
                     </p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0" strokeWidth={1.5} />
+                <ChevronRight
+                  className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0"
+                  strokeWidth={1.5}
+                />
               </button>
             </li>
           ))}

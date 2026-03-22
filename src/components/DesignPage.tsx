@@ -38,10 +38,7 @@ const colorMap: Record<string, { light: string; base: string; dark: string }> = 
  * Determine the status of each step on the Design page
  * Steps: 1. Design Tokens, 2. Shell Design
  */
-function getDesignPageStepStatuses(
-  hasDesignSystem: boolean,
-  hasShell: boolean
-): StepStatus[] {
+function getDesignPageStepStatuses(hasDesignSystem: boolean, hasShell: boolean): StepStatus[] {
   const statuses: StepStatus[] = []
 
   // Step 1: Design Tokens
@@ -106,18 +103,9 @@ export function DesignPage() {
                       Colors
                     </h4>
                     <div className="grid grid-cols-3 gap-6">
-                      <ColorSwatch
-                        label="Primary"
-                        colorName={designSystem.colors.primary}
-                      />
-                      <ColorSwatch
-                        label="Secondary"
-                        colorName={designSystem.colors.secondary}
-                      />
-                      <ColorSwatch
-                        label="Neutral"
-                        colorName={designSystem.colors.neutral}
-                      />
+                      <ColorSwatch label="Primary" colorName={designSystem.colors.primary} />
+                      <ColorSwatch label="Secondary" colorName={designSystem.colors.secondary} />
+                      <ColorSwatch label="Neutral" colorName={designSystem.colors.neutral} />
                     </div>
                   </div>
                 )}
@@ -154,7 +142,11 @@ export function DesignPage() {
                 {/* Edit hint */}
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5">
                   <p className="text-xs text-stone-500 dark:text-stone-400">
-                    Run <code className="font-mono text-stone-700 dark:text-stone-300">/design-tokens</code> to update
+                    Run{' '}
+                    <code className="font-mono text-stone-700 dark:text-stone-300">
+                      /design-tokens
+                    </code>{' '}
+                    to update
                   </p>
                 </div>
               </CardContent>
@@ -192,14 +184,19 @@ export function DesignPage() {
                         // Parse markdown-style bold: **text** → <strong>text</strong>
                         const parts = item.split(/\*\*([^*]+)\*\*/)
                         return (
-                          <li key={index} className="flex items-center gap-2 text-stone-700 dark:text-stone-300">
+                          <li
+                            key={index}
+                            className="flex items-center gap-2 text-stone-700 dark:text-stone-300"
+                          >
                             <span className="w-1 h-1 rounded-full bg-stone-400 dark:bg-stone-500" />
                             {parts.map((part, i) =>
                               i % 2 === 1 ? (
-                                <strong key={i} className="font-semibold">{part}</strong>
+                                <strong key={i} className="font-semibold">
+                                  {part}
+                                </strong>
                               ) : (
                                 <span key={i}>{part}</span>
-                              )
+                              ),
                             )}
                           </li>
                         )
@@ -217,13 +214,19 @@ export function DesignPage() {
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-md bg-stone-200 dark:bg-stone-700 flex items-center justify-center">
-                          <Layout className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
+                          <Layout
+                            className="w-4 h-4 text-stone-600 dark:text-stone-300"
+                            strokeWidth={1.5}
+                          />
                         </div>
                         <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100">
                           View Shell Design
                         </span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
+                      <ChevronRight
+                        className="w-4 h-4 text-stone-400 dark:text-stone-500"
+                        strokeWidth={1.5}
+                      />
                     </Link>
                   </div>
                 )}
@@ -231,7 +234,11 @@ export function DesignPage() {
                 {/* Edit hint */}
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5">
                   <p className="text-xs text-stone-500 dark:text-stone-400">
-                    Run <code className="font-mono text-stone-700 dark:text-stone-300">/design-shell</code> to update
+                    Run{' '}
+                    <code className="font-mono text-stone-700 dark:text-stone-300">
+                      /design-shell
+                    </code>{' '}
+                    to update
                   </p>
                 </div>
               </CardContent>
