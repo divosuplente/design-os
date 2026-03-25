@@ -1,4 +1,4 @@
-import { Suspense, useMemo, useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -11,8 +11,6 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { loadShellPreview } from '@/lib/shell-loader'
-import React from 'react'
 
 const MIN_WIDTH = 320
 const DEFAULT_WIDTH_PERCENT = 100
@@ -185,72 +183,5 @@ export function ShellDesignPage() {
         </div>
       </div>
     </div>
-  )
-}
-
-/**
- * Fullscreen version of the shell preview (for screenshots)
- * Syncs theme with parent window via localStorage
- */
-export function ShellDesignFullscreen() {
-  const shellPreviewLoader = loadShellPreview()
-
-  const ShellPreviewComponent = useMemo(() => {
-    if (!shellPreviewLoader) return null
-    return React.lazy(shellPreviewLoader)
-  }, [shellPreviewLoader])
-
-  // Sync theme with parent window
-  useEffect(() => {
-    const applyTheme = () => {
-      const theme = localStorage.getItem('theme') || 'system'
-      const root = document.documentElement
-
-      if (theme === 'system') {
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        root.classList.toggle('dark', systemDark)
-      } else {
-        root.classList.toggle('dark', theme === 'dark')
-      }
-    }
-
-    // Apply on mount
-    applyTheme()
-
-    // Listen for storage changes (from parent window)
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'theme') {
-        applyTheme()
-      }
-    }
-    window.addEventListener('storage', handleStorageChange)
-
-    // Also poll for changes since storage event doesn't fire in same window
-    const interval = setInterval(applyTheme, 100)
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange)
-      clearInterval(interval)
-    }
-  }, [])
-
-  if (!ShellPreviewComponent) {
-    return (
-      <div className="h-screen flex items-center justify-center bg-background">
-        <p className="text-stone-600 dark:text-stone-400">Shell preview not found.</p>
-      </div>
-    )
-  }
-
-  return (
-    <Suspense
-      fallback={
-        <div className="h-screen flex items-center justify-center bg-background">
-          <div className="text-stone-500 dark:text-stone-400">Loading...</div>
-        </div>
-      }
-    >
-      <ShellPreviewComponent />
-    </Suspense>
   )
 }

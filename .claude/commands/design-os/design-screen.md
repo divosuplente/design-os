@@ -1,6 +1,7 @@
 # Design Screen
 
-You are helping the user create a screen design for a section of their product. The screen design will be a props-based React component that can be exported and integrated into any React codebase.
+You are helping the user create a screen design for a section of their product. The screen design will be a props-based component in the user's chosen platform (`react`, `svelte`, or `astro`) that can be exported and integrated into a matching codebase.
+When examples are shown in React syntax, translate them to the selected platform's idioms before generating files.
 
 ## Step 1: Check Prerequisites
 
@@ -26,7 +27,25 @@ If data.json or types.ts don't exist:
 
 Stop here if any file is missing.
 
-## Step 2: Check for Design System and Shell
+## Step 2: Select Platform, Then Check for Design System and Shell
+
+Before checking optional enhancements, confirm which platform to target for this run of `/design-screen`.
+
+If the user does not specify a platform, ask:
+
+\"Which platform should I generate this screen in?
+
+- React (`.tsx`)
+- Svelte (`.svelte`)
+- Astro (`.astro`)
+
+I can also convert an existing React screen to Astro if you'd like to reuse the current design.\"
+
+Set a variable `platform` and `ext` based on the choice:
+
+- `react` → `ext = tsx`
+- `svelte` → `ext = svelte`
+- `astro` → `ext = astro`
 
 Check for optional enhancements:
 
@@ -40,8 +59,9 @@ If design tokens exist, read them and use them for styling. If they don't exist,
 "Note: Design tokens haven't been defined yet. I'll use default styling, but for consistent branding, consider running `/design-tokens` first."
 
 **Shell:**
-
-- Check if `src/shell/components/AppShell.tsx` exists
+- Check if a shell wrapper exists in any supported platform:
+  - `src/shell/components/ShellWrapper.{tsx|svelte|astro}`
+  - fallback: `src/shell/components/AppShell.{tsx|svelte|astro}`
 
 If shell exists, the screen design will render inside the shell in Design OS. If not, show a warning:
 
@@ -82,7 +102,7 @@ Read the file at `.claude/skills/frontend-design/SKILL.md` and follow its guidan
 
 ## Step 6: Create the Props-Based Component
 
-Create the main component file at `src/sections/[section-id]/components/[ViewName].tsx`.
+Create the main component file at `src/sections/[section-id]/components/[ViewName].[ext]`.
 
 ### Component Structure
 
@@ -93,7 +113,7 @@ The component MUST:
 - Accept callback props for all actions
 - Be fully self-contained and portable
 
-Example:
+Example (React syntax shown; adapt to the selected platform):
 
 ```tsx
 import type { InvoiceListProps } from '@/../product/sections/[section-id]/types'
@@ -164,7 +184,7 @@ export function InvoiceList({ invoices, onView, onEdit, onDelete, onCreate }: In
 
 For complex views, break down into sub-components. Each sub-component should also be props-based.
 
-Create sub-components at `src/sections/[section-id]/components/[SubComponent].tsx`.
+Create sub-components at `src/sections/[section-id]/components/[SubComponent].[ext]`.
 
 Example:
 
@@ -219,7 +239,7 @@ export function InvoiceList({ invoices, onView, onEdit, onDelete }: InvoiceListP
 
 ## Step 8: Create the Preview Wrapper
 
-Create a preview wrapper at `src/sections/[section-id]/[ViewName].tsx` (note: this is in the section root, not in components/).
+Create a preview wrapper at `src/sections/[section-id]/[ViewName].[ext]` (note: this is in the section root, not in components/).
 
 This wrapper is what Design OS renders. It imports the sample data and feeds it to the props-based component.
 
@@ -247,9 +267,23 @@ The preview wrapper:
 - Has a `default` export (required for Design OS routing)
 - Imports sample data from data.json
 - Passes data to the component via props
-- Provides console.log handlers for callbacks (for testing interactions)
+- Provides no-op/testing handlers for callbacks (for example, console logs in React/Svelte, or event/listener-based handling in Astro)
 - Is NOT exported to the user's codebase - it's only for Design OS
 - **Will render inside the shell** if one has been designed
+
+### React → Astro Conversion Mode
+
+If `platform=astro` and an equivalent React file already exists (`.tsx`), you may convert it instead of redesigning from scratch.
+
+When converting:
+
+- Preserve the visual layout, semantic structure, and props shape.
+- Convert JSX syntax to Astro syntax (`className` → `class`, fragments/props handling, etc.).
+- Keep data passed via props in exportable components.
+- Replace React event prop usage in Astro HTML with script-based handlers or component-level event dispatch where needed.
+- If conversion hits unsupported React-specific logic (hooks/state-heavy UI that cannot be represented cleanly in Astro), stop and ask whether to:
+  1. keep this screen in React, or
+  2. split interactive parts into framework islands and keep the rest Astro.
 
 ## Step 9: Create Component Index
 
@@ -271,13 +305,13 @@ Let the user know:
 
 **Exportable components** (props-based, portable):
 
-- `src/sections/[section-id]/components/[ViewName].tsx`
-- `src/sections/[section-id]/components/[SubComponent].tsx` (if created)
+- `src/sections/[section-id]/components/[ViewName].[ext]`
+- `src/sections/[section-id]/components/[SubComponent].[ext]` (if created)
 - `src/sections/[section-id]/components/index.ts`
 
 **Preview wrapper** (for Design OS only):
 
-- `src/sections/[section-id]/[ViewName].tsx`
+- `src/sections/[section-id]/[ViewName].[ext]`
 
 **Important:** Restart your dev server to see the changes.
 
@@ -306,3 +340,4 @@ If the spec indicates additional views are needed:
 - Sub-components should also be props-based for maximum portability
 - Apply design tokens when available for consistent branding
 - Screen designs render inside the shell when viewed in Design OS (if shell exists)
+- For Astro outputs, do not rely on React-style HTML event props; use Astro-appropriate scripts/events for interactions

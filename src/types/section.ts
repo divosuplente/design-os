@@ -2,6 +2,7 @@
  * Section types for Design OS v2
  */
 
+import type { DesignFileExtension, DesignPlatform } from '@/types/platform'
 export interface SectionData {
   sectionId: string
   spec: string | null
@@ -24,6 +25,8 @@ export interface ScreenDesignInfo {
   name: string
   path: string
   componentName: string
+  platform: DesignPlatform
+  extension: DesignFileExtension
 }
 
 export interface ScreenshotInfo {

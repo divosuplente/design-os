@@ -1,0 +1,33 @@
+---
+import '@/index.css'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import FullscreenThemeSync from '@/components/FullscreenThemeSync.astro'
+import { getShellPreviewArtifact, loadShellPreviewModule } from '@/lib/shell-loader'
+
+const shellPreview = getShellPreviewArtifact()
+
+let shellPreviewModule: { default: unknown } | null = null
+if (shellPreview) {
+  const loader = loadShellPreviewModule(shellPreview.platform)
+  if (loader) {
+    shellPreviewModule = await loader()
+  }
+}
+
+const ShellPreview = shellPreviewModule?.default as any
+---
+
+<BaseLayout title="Shell Design: Fullscreen">
+  <FullscreenThemeSync />
+  {!ShellPreview ? (
+    <div class="h-screen flex items-center justify-center bg-background">
+      <p class="text-stone-600 dark:text-stone-400">Shell preview not found.</p>
+    </div>
+  ) : (
+    <>
+      {shellPreview?.platform === 'react' && <ShellPreview client:load />}
+      {shellPreview?.platform === 'svelte' && <ShellPreview client:load />}
+      {shellPreview?.platform === 'astro' && <ShellPreview />}
+    </>
+  )}
+</BaseLayout>

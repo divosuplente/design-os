@@ -91,18 +91,18 @@ product/                           # Product definition (portable)
 src/
 ├── shell/                         # Shell design components
 │   ├── components/
-│   │   ├── AppShell.tsx
-│   │   ├── MainNav.tsx
-│   │   ├── UserMenu.tsx
+│   │   ├── ShellWrapper.[ext]
+│   │   ├── MainNav.[ext]
+│   │   ├── UserMenu.[ext]
 │   │   └── index.ts
-│   └── ShellPreview.tsx
+│   └── ShellPreview.[ext]
 │
 └── sections/
     └── [section-name]/
         ├── components/            # Exportable components
-        │   ├── [Component].tsx
+        │   ├── [Component].[ext]
         │   └── index.ts
-        └── [ViewName].tsx         # Preview wrapper
+        └── [ViewName].[ext]       # Preview wrapper
 
 product-plan/                      # Export package (generated)
 ├── README.md                      # Quick start guide
@@ -203,7 +203,7 @@ The `/export-product` command generates a UI design handoff package:
   - `one-shot-instructions.md`: All milestones combined
   - Incremental instructions in `instructions/incremental/`
 - **Test specs**: Each section includes `tests.md` with UI behavior specs
-- **Portable components**: Props-based, ready for any React setup
+- **Portable components**: Props-based, ready for matching framework setups
 - **Data shapes**: TypeScript interfaces defining what data the components expect
 
 The handoff focuses on UI designs, product requirements, and user flows. Backend architecture, data modeling, and business logic decisions are left to the implementation agent. The prompts guide the agent to ask clarifying questions about tech stack and requirements before building.
@@ -219,3 +219,21 @@ The Design OS application itself uses a "Refined Utility" aesthetic:
 - **Layout**: Maximum 800px content width, generous whitespace
 - **Cards**: Minimal borders (1px), subtle shadows, generous padding
 - **Motion**: Subtle fade-ins (200ms), no bouncy animations
+
+---
+
+## Spec Task Tracking
+
+Current implementation spec: multi-platform generated artifacts (`react`, `svelte`, `astro`) with Astro fullscreen rendering and React→Astro conversion guidance for generated screen designs.
+
+### Implementation Phase Status
+
+- Platform-aware section/shell artifact discovery and metadata: complete
+- Astro-based fullscreen rendering for sections and shell previews: complete
+- Command and documentation alignment for platform-aware generation/export: complete
+
+### Closure Phase Requirements
+
+- Run and pass validation commands (`build`, `check`, `lint`)
+- Confirm preview/fullscreen route compatibility and shell wrapping behavior
+- Summarize outcomes and remaining conversion constraints when handing off

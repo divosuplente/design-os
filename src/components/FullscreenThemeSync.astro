@@ -1,0 +1,31 @@
+<script is:inline>
+  const applyTheme = () => {
+    const theme = localStorage.getItem('theme') || 'system'
+    const root = document.documentElement
+    if (theme === 'system') {
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      root.classList.toggle('dark', systemDark)
+      return
+    }
+    root.classList.toggle('dark', theme === 'dark')
+  }
+
+  applyTheme()
+
+  const handleStorageChange = (event) => {
+    if (event.key === 'theme') {
+      applyTheme()
+    }
+  }
+
+  window.addEventListener('storage', handleStorageChange)
+  const interval = window.setInterval(applyTheme, 100)
+
+  const cleanup = () => {
+    window.removeEventListener('storage', handleStorageChange)
+    window.clearInterval(interval)
+    window.removeEventListener('pagehide', cleanup)
+  }
+
+  window.addEventListener('pagehide', cleanup)
+</script>

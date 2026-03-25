@@ -21,7 +21,7 @@ See [Product Planning](product-planning.md) for details on each command.
 Once the foundation is set, work through each section:
 
 1. **Shape the Section** — Define scope, requirements, and generate sample data + types
-2. **Design the Screen** — Build the actual React components
+2. **Design the Screen** — Build the actual platform components (`react`, `svelte`, or `astro`)
 3. **Capture Screenshots** — Document the design (optional)
 
 Repeat for each section in your roadmap.

@@ -53,7 +53,7 @@ Ask questions one or two at a time, conversationally. Focus on user experience a
 
 ## Step 5: Ask About Shell Configuration
 
-If a shell design has been created for this project (check if `/src/shell/components/AppShell.tsx` exists), ask the user about shell usage:
+If a shell design has been created for this project (check if `/src/shell/components/AppShell.{tsx|svelte|astro}` or `/src/shell/components/ShellWrapper.{tsx|svelte|astro}` exists), ask the user about shell usage:
 
 "Should this section's screen designs be displayed **inside the app shell** (with navigation header), or should they be **standalone pages** (without the shell)?
 

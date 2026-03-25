@@ -2,8 +2,10 @@
  * Shell loading and parsing utilities
  */
 
-import type { ShellSpec, ShellInfo } from '@/types/product'
-import type { ComponentType, ReactNode } from 'react'
+import type { ShellSpec, ShellInfo, ShellArtifactInfo } from '@/types/product'
+import type { DesignFileExtension, DesignPlatform } from '@/types/platform'
+
+type DesignModuleLoader = () => Promise<{ default: unknown }>
 
 // Load shell spec markdown file at build time
 const shellSpecFiles = import.meta.glob('/product/shell/*.md', {
@@ -12,17 +14,79 @@ const shellSpecFiles = import.meta.glob('/product/shell/*.md', {
   eager: true,
 }) as Record<string, string>
 
-// Load shell components lazily
-const shellComponentModules = import.meta.glob('/src/shell/components/*.tsx') as Record<
-  string,
-  () => Promise<{ default: ComponentType }>
->
+// Load shell components lazily (React, Svelte, Astro)
+const shellComponentModules = import.meta.glob([
+  '/src/shell/components/*.tsx',
+  '/src/shell/components/*.svelte',
+  '/src/shell/components/*.astro',
+]) as Record<string, DesignModuleLoader>
 
-// Load shell preview component lazily
-const shellPreviewModules = import.meta.glob('/src/shell/*.tsx') as Record<
-  string,
-  () => Promise<{ default: ComponentType }>
->
+// Load shell preview wrappers lazily (React, Svelte, Astro)
+const shellPreviewModules = import.meta.glob([
+  '/src/shell/*.tsx',
+  '/src/shell/*.svelte',
+  '/src/shell/*.astro',
+]) as Record<string, DesignModuleLoader>
+
+const EXTENSION_TO_PLATFORM: Record<DesignFileExtension, DesignPlatform> = {
+  tsx: 'react',
+  svelte: 'svelte',
+  astro: 'astro',
+}
+
+const EXTENSION_PRIORITY: DesignFileExtension[] = ['astro', 'svelte', 'tsx']
+
+function getExtensionPriority(extension: DesignFileExtension): number {
+  const index = EXTENSION_PRIORITY.indexOf(extension)
+  return index === -1 ? EXTENSION_PRIORITY.length : index
+}
+
+function extractShellArtifact(path: string): ShellArtifactInfo | null {
+  const match = path.match(/\/src\/shell(?:\/components)?\/([^/.]+)\.(tsx|svelte|astro)$/)
+  if (!match) return null
+  const extension = match[2] as DesignFileExtension
+  return {
+    name: match[1],
+    path,
+    extension,
+    platform: EXTENSION_TO_PLATFORM[extension],
+  }
+}
+
+function chooseByPriority(
+  artifacts: ShellArtifactInfo[],
+  preferredPlatform?: DesignPlatform,
+): ShellArtifactInfo | null {
+  const candidates = preferredPlatform
+    ? artifacts.filter((artifact) => artifact.platform === preferredPlatform)
+    : artifacts
+  if (candidates.length === 0) return null
+  return candidates.sort((a, b) => {
+    return getExtensionPriority(a.extension) - getExtensionPriority(b.extension)
+  })[0]
+}
+
+function getShellComponentArtifactsByName(componentName: string): ShellArtifactInfo[] {
+  const artifacts: ShellArtifactInfo[] = []
+  for (const path of Object.keys(shellComponentModules)) {
+    const artifact = extractShellArtifact(path)
+    if (artifact?.name === componentName) {
+      artifacts.push(artifact)
+    }
+  }
+  return artifacts
+}
+
+function getShellPreviewArtifactsByName(componentName: string): ShellArtifactInfo[] {
+  const artifacts: ShellArtifactInfo[] = []
+  for (const path of Object.keys(shellPreviewModules)) {
+    const artifact = extractShellArtifact(path)
+    if (artifact?.name === componentName) {
+      artifacts.push(artifact)
+    }
+  }
+  return artifacts
+}
 
 /**
  * Parse shell spec.md content into ShellSpec structure
@@ -83,18 +147,31 @@ export function parseShellSpec(md: string): ShellSpec | null {
 }
 
 /**
+ * Get shell wrapper artifact (prefers ShellWrapper, falls back to AppShell)
+ * When preferredPlatform is provided, only same-platform wrappers are returned.
+ */
+export function getShellWrapperArtifact(preferredPlatform?: DesignPlatform): ShellArtifactInfo | null {
+  const shellWrapper = chooseByPriority(
+    getShellComponentArtifactsByName('ShellWrapper'),
+    preferredPlatform,
+  )
+  if (shellWrapper) return shellWrapper
+  return chooseByPriority(getShellComponentArtifactsByName('AppShell'), preferredPlatform)
+}
+
+/**
+ * Get shell preview artifact (ShellPreview.{tsx|svelte|astro})
+ * When preferredPlatform is provided, only same-platform previews are returned.
+ */
+export function getShellPreviewArtifact(preferredPlatform?: DesignPlatform): ShellArtifactInfo | null {
+  return chooseByPriority(getShellPreviewArtifactsByName('ShellPreview'), preferredPlatform)
+}
+
+/**
  * Check if shell components exist
  */
 export function hasShellComponents(): boolean {
-  // Check if AppShell.tsx exists
-  const exists = '/src/shell/components/AppShell.tsx' in shellComponentModules
-  // Debug: log available shell components
-  console.log('[Shell] hasShellComponents check:', {
-    exists,
-    availableComponents: Object.keys(shellComponentModules),
-    lookingFor: '/src/shell/components/AppShell.tsx',
-  })
-  return exists
+  return getShellWrapperArtifact() !== null
 }
 
 /**
@@ -102,40 +179,32 @@ export function hasShellComponents(): boolean {
  */
 export function loadShellComponent(
   componentName: string,
-): (() => Promise<{ default: ComponentType }>) | null {
-  const path = `/src/shell/components/${componentName}.tsx`
-  return shellComponentModules[path] || null
-}
-
-/**
- * Load AppShell component that can wrap content
- * First tries to load ShellWrapper (designed for wrapping arbitrary content)
- * Falls back to AppShell if ShellWrapper doesn't exist
- */
-export function loadAppShell():
-  | (() => Promise<{ default: ComponentType<{ children?: ReactNode }> }>)
-  | null {
-  // First try ShellWrapper - a component specifically designed to wrap content
-  const wrapperPath = '/src/shell/components/ShellWrapper.tsx'
-  if (wrapperPath in shellComponentModules) {
-    return shellComponentModules[wrapperPath] as () => Promise<{
-      default: ComponentType<{ children?: ReactNode }>
-    }>
-  }
-  // Fall back to AppShell
-  const path = '/src/shell/components/AppShell.tsx'
-  return (
-    (shellComponentModules[path] as () => Promise<{
-      default: ComponentType<{ children?: ReactNode }>
-    }>) || null
+  preferredPlatform?: DesignPlatform,
+): DesignModuleLoader | null {
+  const artifact = chooseByPriority(
+    getShellComponentArtifactsByName(componentName),
+    preferredPlatform,
   )
+  if (!artifact) return null
+  return shellComponentModules[artifact.path] || null
 }
 
 /**
- * Load shell preview wrapper dynamically
+ * Load shell wrapper module dynamically
  */
-export function loadShellPreview(): (() => Promise<{ default: ComponentType }>) | null {
-  return shellPreviewModules['/src/shell/ShellPreview.tsx'] || null
+export function loadShellWrapperModule(preferredPlatform?: DesignPlatform): DesignModuleLoader | null {
+  const artifact = getShellWrapperArtifact(preferredPlatform)
+  if (!artifact) return null
+  return shellComponentModules[artifact.path] || null
+}
+
+/**
+ * Load shell preview wrapper module dynamically
+ */
+export function loadShellPreviewModule(preferredPlatform?: DesignPlatform): DesignModuleLoader | null {
+  const artifact = getShellPreviewArtifact(preferredPlatform)
+  if (!artifact) return null
+  return shellPreviewModules[artifact.path] || null
 }
 
 /**
@@ -144,14 +213,16 @@ export function loadShellPreview(): (() => Promise<{ default: ComponentType }>) 
 export function loadShellInfo(): ShellInfo | null {
   const specContent = shellSpecFiles['/product/shell/spec.md']
   const spec = specContent ? parseShellSpec(specContent) : null
-  const hasComponents = hasShellComponents()
+  const wrapper = getShellWrapperArtifact()
+  const preview = getShellPreviewArtifact()
+  const hasComponents = wrapper !== null
 
   // Return null if neither spec nor components exist
   if (!spec && !hasComponents) {
     return null
   }
 
-  return { spec, hasComponents }
+  return { spec, hasComponents, preview, wrapper }
 }
 
 /**
@@ -172,12 +243,10 @@ export function hasShellSpec(): boolean {
  * Get list of shell component names
  */
 export function getShellComponentNames(): string[] {
-  const names: string[] = []
+  const names = new Set<string>()
   for (const path of Object.keys(shellComponentModules)) {
-    const match = path.match(/\/src\/shell\/components\/([^/]+)\.tsx$/)
-    if (match) {
-      names.push(match[1])
-    }
+    const artifact = extractShellArtifact(path)
+    if (artifact) names.add(artifact.name)
   }
-  return names
+  return Array.from(names).sort()
 }

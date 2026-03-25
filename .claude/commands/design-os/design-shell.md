@@ -1,6 +1,7 @@
 # Design Shell
 
 You are helping the user design the application shell — the persistent navigation and layout that wraps all sections. This is a screen design, not implementation code.
+Generate shell artifacts in the selected platform (`react`, `svelte`, or `astro`).
 
 ## Step 1: Check Prerequisites
 
@@ -22,6 +23,16 @@ Stop here if overview or roadmap are missing.
 If design tokens are missing, show a warning but continue:
 
 "Note: Design tokens haven't been defined yet. I'll proceed with default styling, but you may want to run `/design-tokens` first for consistent colors and typography."
+
+Before implementation, confirm platform:
+
+"Which platform should I use for the shell components?
+
+- React (`.tsx`)
+- Svelte (`.svelte`)
+- Astro (`.astro`)"
+
+Set `platform` and `ext` from this choice.
 
 ## Step 2: Analyze Product Structure
 
@@ -125,14 +136,16 @@ Create `/product/shell/spec.md`:
 
 ## Step 6: Create Shell Components
 
-Create the shell components at `src/shell/components/`:
+Create the shell components at `src/shell/components/` using `.[ext]`:
 
-### AppShell.tsx
+### ShellWrapper.[ext]
 
-The main wrapper component that accepts children and provides the layout structure.
+The main wrapper component that accepts page content and provides the layout structure.
+
+Example props shape (React-style example; adapt syntax to selected platform):
 
 ```tsx
-interface AppShellProps {
+interface ShellWrapperProps {
   children: React.ReactNode
   navigationItems: Array<{ label: string; href: string; isActive?: boolean }>
   user?: { name: string; avatarUrl?: string }
@@ -141,11 +154,11 @@ interface AppShellProps {
 }
 ```
 
-### MainNav.tsx
+### MainNav.[ext]
 
 The navigation component (sidebar or top nav based on the chosen pattern).
 
-### UserMenu.tsx
+### UserMenu.[ext]
 
 The user menu with avatar and dropdown.
 
@@ -160,15 +173,15 @@ Export all components.
 - Support light and dark mode with `dark:` variants
 - Be mobile responsive
 - Use Tailwind CSS for styling
-- Use lucide-react for icons
+- Use platform-appropriate icon rendering (inline SVG preferred, or a matching Lucide package)
 
 ## Step 7: Create Shell Preview
 
-Create `src/shell/ShellPreview.tsx` — a preview wrapper for viewing the shell in Design OS:
+Create `src/shell/ShellPreview.[ext]` — a preview wrapper for viewing the shell in Design OS:
 
 ```tsx
 import data from '@/../product/sections/[first-section]/data.json' // if exists
-import { AppShell } from './components/AppShell'
+import { ShellWrapper } from './components/ShellWrapper'
 
 export default function ShellPreview() {
   const navigationItems = [
@@ -183,7 +196,7 @@ export default function ShellPreview() {
   }
 
   return (
-    <AppShell
+    <ShellWrapper
       navigationItems={navigationItems}
       user={user}
       onNavigate={(href) => console.log('Navigate to:', href)}
@@ -193,7 +206,7 @@ export default function ShellPreview() {
         <h1 className="text-2xl font-bold mb-4">Content Area</h1>
         <p className="text-stone-600 dark:text-stone-400">Section content will render here.</p>
       </div>
-    </AppShell>
+    </ShellWrapper>
   )
 }
 ```
@@ -225,11 +238,11 @@ Let the user know:
 **Created files:**
 
 - `/product/shell/spec.md` — Shell specification
-- `src/shell/components/AppShell.tsx` — Main shell wrapper
-- `src/shell/components/MainNav.tsx` — Navigation component
-- `src/shell/components/UserMenu.tsx` — User menu component
+- `src/shell/components/ShellWrapper.[ext]` — Main shell wrapper
+- `src/shell/components/MainNav.[ext]` — Navigation component
+- `src/shell/components/UserMenu.[ext]` — User menu component
 - `src/shell/components/index.ts` — Component exports
-- `src/shell/ShellPreview.tsx` — Preview wrapper
+- `src/shell/ShellPreview.[ext]` — Preview wrapper
 
 **Shell features:**
 
@@ -253,3 +266,4 @@ Next: Run `/shape-section` to start designing your first section."
 - Apply design tokens when available for consistent styling
 - Keep the shell focused on navigation chrome — no authentication UI
 - Section screen designs will render inside the shell's content area
+- When examples are shown in React syntax, translate to the selected platform before generating files

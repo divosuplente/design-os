@@ -4,11 +4,13 @@
  * File structure:
  * - product/sections/[section-id]/spec.md     - Section specification
  * - product/sections/[section-id]/data.json   - Sample data
- * - src/sections/[section-id]/[PageName].tsx  - Screen design pages
+ * - src/sections/[section-id]/[PageName].{tsx|svelte|astro} - Screen design pages
  */
 
 import type { SectionData, ParsedSpec, ScreenDesignInfo, ScreenshotInfo } from '@/types/section'
-import type { ComponentType } from 'react'
+import type { DesignFileExtension, DesignPlatform } from '@/types/platform'
+
+type DesignModuleLoader = () => Promise<{ default: unknown }>
 
 // Load spec.md files from product/sections at build time
 const specFiles = import.meta.glob('/product/sections/*/spec.md', {
@@ -23,10 +25,11 @@ const dataFiles = import.meta.glob('/product/sections/*/data.json', {
 }) as Record<string, { default: Record<string, unknown> }>
 
 // Load screen design components from src/sections lazily
-const screenDesignModules = import.meta.glob('/src/sections/*/*.tsx') as Record<
-  string,
-  () => Promise<{ default: ComponentType }>
->
+const screenDesignModules = import.meta.glob([
+  '/src/sections/*/*.tsx',
+  '/src/sections/*/*.svelte',
+  '/src/sections/*/*.astro',
+]) as Record<string, DesignModuleLoader>
 
 // Load screenshot files from product/sections at build time
 const screenshotFiles = import.meta.glob('/product/sections/*/*.png', {
@@ -34,6 +37,14 @@ const screenshotFiles = import.meta.glob('/product/sections/*/*.png', {
   import: 'default',
   eager: true,
 }) as Record<string, string>
+
+const EXTENSION_TO_PLATFORM: Record<DesignFileExtension, DesignPlatform> = {
+  tsx: 'react',
+  svelte: 'svelte',
+  astro: 'astro',
+}
+
+const EXTENSION_PRIORITY: DesignFileExtension[] = ['astro', 'svelte', 'tsx']
 
 /**
  * Extract section ID from a product/sections file path
@@ -58,8 +69,14 @@ function extractSectionIdFromSrc(path: string): string | null {
  * e.g., "/src/sections/invoices/InvoiceList.tsx" -> "InvoiceList"
  */
 function extractScreenDesignName(path: string): string | null {
-  const match = path.match(/\/src\/sections\/[^/]+\/([^/]+)\.tsx$/)
+  const match = path.match(/\/src\/sections\/[^/]+\/([^/.]+)\.(tsx|svelte|astro)$/)
   return match?.[1] || null
+}
+
+function extractExtension(path: string): DesignFileExtension | null {
+  const match = path.match(/\.(tsx|svelte|astro)$/)
+  if (!match) return null
+  return match[1] as DesignFileExtension
 }
 
 /**
@@ -69,6 +86,45 @@ function extractScreenDesignName(path: string): string | null {
 function extractScreenshotName(path: string): string | null {
   const match = path.match(/\/product\/sections\/[^/]+\/([^/]+)\.png$/)
   return match?.[1] || null
+}
+
+function getExtensionPriority(extension: DesignFileExtension): number {
+  const index = EXTENSION_PRIORITY.indexOf(extension)
+  return index === -1 ? EXTENSION_PRIORITY.length : index
+}
+
+function choosePreferredScreenDesign(
+  existing: ScreenDesignInfo | undefined,
+  candidate: ScreenDesignInfo,
+): ScreenDesignInfo {
+  if (!existing) return candidate
+  const candidatePriority = getExtensionPriority(candidate.extension)
+  const existingPriority = getExtensionPriority(existing.extension)
+  return candidatePriority < existingPriority ? candidate : existing
+}
+
+function getSectionScreenDesignMap(sectionId: string): Map<string, ScreenDesignInfo> {
+  const screenDesignMap = new Map<string, ScreenDesignInfo>()
+  const prefix = `/src/sections/${sectionId}/`
+
+  for (const path of Object.keys(screenDesignModules)) {
+    if (!path.startsWith(prefix)) continue
+    const name = extractScreenDesignName(path)
+    const extension = extractExtension(path)
+    if (!name || !extension) continue
+
+    const candidate: ScreenDesignInfo = {
+      name,
+      path,
+      componentName: name,
+      platform: EXTENSION_TO_PLATFORM[extension],
+      extension,
+    }
+
+    screenDesignMap.set(name, choosePreferredScreenDesign(screenDesignMap.get(name), candidate))
+  }
+
+  return screenDesignMap
 }
 
 /**
@@ -146,23 +202,19 @@ export function parseSpec(md: string): ParsedSpec | null {
  * Get screen designs for a specific section
  */
 export function getSectionScreenDesigns(sectionId: string): ScreenDesignInfo[] {
-  const screenDesigns: ScreenDesignInfo[] = []
-  const prefix = `/src/sections/${sectionId}/`
+  return Array.from(getSectionScreenDesignMap(sectionId).values()).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  )
+}
 
-  for (const path of Object.keys(screenDesignModules)) {
-    if (path.startsWith(prefix)) {
-      const name = extractScreenDesignName(path)
-      if (name) {
-        screenDesigns.push({
-          name,
-          path,
-          componentName: name,
-        })
-      }
-    }
-  }
-
-  return screenDesigns
+/**
+ * Get a single screen design artifact for a specific section and name
+ */
+export function getSectionScreenDesign(
+  sectionId: string,
+  screenDesignName: string,
+): ScreenDesignInfo | null {
+  return getSectionScreenDesignMap(sectionId).get(screenDesignName) || null
 }
 
 /**
@@ -189,14 +241,15 @@ export function getSectionScreenshots(sectionId: string): ScreenshotInfo[] {
 }
 
 /**
- * Load screen design component dynamically
+ * Load screen design module dynamically
  */
-export function loadScreenDesignComponent(
+export function loadScreenDesignModule(
   sectionId: string,
   screenDesignName: string,
-): (() => Promise<{ default: ComponentType }>) | null {
-  const path = `/src/sections/${sectionId}/${screenDesignName}.tsx`
-  return screenDesignModules[path] || null
+): DesignModuleLoader | null {
+  const screenDesign = getSectionScreenDesign(sectionId, screenDesignName)
+  if (!screenDesign) return null
+  return screenDesignModules[screenDesign.path] || null
 }
 
 /**
@@ -268,5 +321,5 @@ export function getAllSectionIds(): string[] {
     if (id) ids.add(id)
   }
 
-  return Array.from(ids)
+  return Array.from(ids).sort()
 }

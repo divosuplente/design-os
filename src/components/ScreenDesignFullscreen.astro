@@ -1,0 +1,99 @@
+---
+import '@/index.css'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import FullscreenThemeSync from '@/components/FullscreenThemeSync.astro'
+import {
+  getSectionScreenDesign,
+  loadScreenDesignModule,
+  sectionUsesShell,
+} from '@/lib/section-loader'
+import { getShellWrapperArtifact, loadShellInfo, loadShellWrapperModule } from '@/lib/shell-loader'
+
+const { sectionId = '', screenDesignName = '' } = Astro.params
+
+const screenDesign = sectionId && screenDesignName ? getSectionScreenDesign(sectionId, screenDesignName) : null
+
+let screenModule: { default: unknown } | null = null
+if (screenDesign) {
+  const loader = loadScreenDesignModule(sectionId, screenDesign.name)
+  if (loader) {
+    screenModule = await loader()
+  }
+}
+
+const shouldUseShell = sectionId ? sectionUsesShell(sectionId) : false
+const shellArtifact = shouldUseShell && screenDesign ? getShellWrapperArtifact(screenDesign.platform) : null
+
+let shellModule: { default: unknown } | null = null
+if (shellArtifact) {
+  const loader = loadShellWrapperModule(shellArtifact.platform)
+  if (loader) {
+    shellModule = await loader()
+  }
+}
+
+const Screen = screenModule?.default as any
+const ShellWrapper = shellModule?.default as any
+
+const shellInfo = loadShellInfo()
+const specNavItems = shellInfo?.spec?.navigationItems || []
+
+const navigationItems =
+  specNavItems.length > 0
+    ? specNavItems.map((item, index) => {
+        const labelMatch = item.match(/\*\*([^*]+)\*\*/)
+        const label = labelMatch ? labelMatch[1] : item.split('→')[0]?.trim() || `Item ${index + 1}`
+        return {
+          label,
+          href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
+          isActive: index === 0,
+        }
+      })
+    : [
+        { label: 'Dashboard', href: '/', isActive: true },
+        { label: 'Items', href: '/items' },
+        { label: 'Settings', href: '/settings' },
+      ]
+
+const shellProps = {
+  navigationItems,
+  user: {
+    name: 'Demo User',
+  },
+}
+
+const title = screenDesignName ? `Screen Design: ${screenDesignName}` : 'Screen Design'
+---
+
+<BaseLayout title={title}>
+  <FullscreenThemeSync />
+  {!Screen ? (
+    <div class="h-screen flex items-center justify-center bg-background">
+      <p class="text-stone-600 dark:text-stone-400">Screen design not found.</p>
+    </div>
+  ) : ShellWrapper ? (
+    <>
+      {screenDesign?.platform === 'react' && (
+        <ShellWrapper client:load {...shellProps}>
+          <Screen />
+        </ShellWrapper>
+      )}
+      {screenDesign?.platform === 'svelte' && (
+        <ShellWrapper client:load {...shellProps}>
+          <Screen />
+        </ShellWrapper>
+      )}
+      {screenDesign?.platform === 'astro' && (
+        <ShellWrapper {...shellProps}>
+          <Screen />
+        </ShellWrapper>
+      )}
+    </>
+  ) : (
+    <>
+      {screenDesign?.platform === 'react' && <Screen client:load />}
+      {screenDesign?.platform === 'svelte' && <Screen client:load />}
+      {screenDesign?.platform === 'astro' && <Screen />}
+    </>
+  )}
+</BaseLayout>

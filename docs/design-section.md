@@ -40,16 +40,17 @@ Once it has enough information, the AI writes the spec and generates sample data
 /design-screen
 ```
 
-Build the actual React components for the section. This is where the spec and sample data become a working UI.
+Build the actual platform components for the section (`react`, `svelte`, or `astro`). This is where the spec and sample data become a working UI.
 
 ### What Gets Created
 
 **Exportable components** (props-based, portable):
 
 The main component and any sub-components, all accepting data and callbacks via props. These are what get exported to your codebase.
+If needed, you can convert an existing React screen to Astro during this step.
 
 ```tsx
-// Example: Components accept props, never import data directly
+// React-style example: components accept props, never import data directly
 export function InvoiceList({ invoices, onView, onEdit, onDelete, onCreate }: InvoiceListProps) {
   // ...
 }
@@ -74,10 +75,10 @@ If the spec implies multiple views (list view, detail view, form, etc.), you'll 
 
 **Creates:**
 
-- `src/sections/[section-id]/components/[ViewName].tsx` — Main component
-- `src/sections/[section-id]/components/[SubComponent].tsx` — Sub-components as needed
+- `src/sections/[section-id]/components/[ViewName].[ext]` — Main component
+- `src/sections/[section-id]/components/[SubComponent].[ext]` — Sub-components as needed
 - `src/sections/[section-id]/components/index.ts` — Component exports
-- `src/sections/[section-id]/[ViewName].tsx` — Preview wrapper
+- `src/sections/[section-id]/[ViewName].[ext]` — Preview wrapper
 
 **Important:** Restart your dev server after creating screen designs to see the changes.
 

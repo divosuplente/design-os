@@ -1,6 +1,7 @@
 /**
  * Product types for Design OS v2
  */
+import type { DesignFileExtension, DesignPlatform } from '@/types/platform'
 
 // =============================================================================
 // Product Overview
@@ -78,10 +79,18 @@ export interface ShellSpec {
   navigationItems: string[]
   layoutPattern: string
 }
+export interface ShellArtifactInfo {
+  name: string
+  path: string
+  platform: DesignPlatform
+  extension: DesignFileExtension
+}
 
 export interface ShellInfo {
   spec: ShellSpec | null
   hasComponents: boolean
+  preview: ShellArtifactInfo | null
+  wrapper: ShellArtifactInfo | null
 }
 
 // =============================================================================

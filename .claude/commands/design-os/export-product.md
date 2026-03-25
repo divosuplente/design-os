@@ -17,7 +17,7 @@ Verify the minimum requirements exist:
 - `/product/data-shape/data-shape.md` — Product entities
 - `/product/design-system/colors.json` — Color tokens
 - `/product/design-system/typography.json` — Typography tokens
-- `src/shell/components/AppShell.tsx` — Application shell
+- `src/shell/components/ShellWrapper.[ext]` (or `AppShell.[ext]` for legacy projects) — Application shell
 
 If required files are missing:
 
@@ -87,9 +87,9 @@ product-plan/
 ├── shell/                       # Shell components
 │   ├── README.md
 │   ├── components/
-│   │   ├── AppShell.tsx
-│   │   ├── MainNav.tsx
-│   │   ├── UserMenu.tsx
+│   │   ├── ShellWrapper.[ext]
+│   │   ├── MainNav.[ext]
+│   │   ├── UserMenu.[ext]
 │   │   └── index.ts
 │   └── screenshot.png (if exists)
 │
@@ -98,7 +98,7 @@ product-plan/
         ├── README.md
         ├── tests.md               # UI behavior test specs
         ├── components/
-        │   ├── [Component].tsx
+        │   ├── [Component].[ext]
         │   └── index.ts
         ├── types.ts
         ├── sample-data.json
@@ -165,7 +165,7 @@ Each milestone instruction file should begin with the following preamble (adapt 
 ## About This Handoff
 
 **What you're receiving:**
-- Finished UI designs (React components with full styling)
+- Finished UI designs (platform-specific components with full styling)
 - Product requirements and user flow specifications
 - Design system tokens (colors, typography)
 - Sample data showing the shape of data components expect
@@ -218,9 +218,9 @@ Define your own design tokens based on your brand guidelines.
 
 Copy the shell components from `product-plan/shell/components/` to your project:
 
-- `AppShell.tsx` — Main layout wrapper
-- `MainNav.tsx` — Navigation component
-- `UserMenu.tsx` — User menu with avatar
+- `ShellWrapper.[ext]` — Main layout wrapper
+- `MainNav.[ext]` — Navigation component
+- `UserMenu.[ext]` — User menu with avatar
 
 **Wire Up Navigation:**
 
@@ -248,7 +248,7 @@ Design and implement your own application shell with:
 
 - `product-plan/design-system/` — Design tokens
 - `product-plan/shell/README.md` — Shell design intent
-- `product-plan/shell/components/` — Shell React components
+- `product-plan/shell/components/` — Shell components
 - `product-plan/shell/screenshot.png` — Shell visual reference
 
 ## Done When
@@ -308,10 +308,10 @@ The components expect these data shapes (see `types.ts` for full definitions):
 
 | Callback   | Triggered When              |
 | ---------- | --------------------------- |
-| `onView`   | User clicks to view details |
-| `onEdit`   | User clicks to edit         |
-| `onDelete` | User clicks to delete       |
-| `onCreate` | User clicks to create new   |
+| `onView`   | User triggers view details  |
+| `onEdit`   | User triggers edit          |
+| `onDelete` | User triggers delete        |
+| `onCreate` | User triggers create new    |
 
 [Adjust based on actual Props interface]
 
@@ -361,7 +361,7 @@ See `product-plan/sections/[section-id]/tests.md` for UI behavior test specs cov
 
 - `product-plan/sections/[section-id]/README.md` — Feature overview and design intent
 - `product-plan/sections/[section-id]/tests.md` — UI behavior test specs
-- `product-plan/sections/[section-id]/components/` — React components
+- `product-plan/sections/[section-id]/components/` — Platform components
 - `product-plan/sections/[section-id]/types.ts` — TypeScript interfaces
 - `product-plan/sections/[section-id]/sample-data.json` — Test data
 - `product-plan/sections/[section-id]/screenshot.png` — Visual reference
@@ -389,7 +389,7 @@ Create `product-plan/instructions/one-shot-instructions.md` by combining all mil
 
 **What you're receiving:**
 
-- Finished UI designs (React components with full styling)
+- Finished UI designs (platform-specific components with full styling)
 - Product requirements and user flow specifications
 - Design system tokens (colors, typography)
 - Sample data showing the shape of data components expect
@@ -446,7 +446,7 @@ Each section includes a `tests.md` file with UI behavior test specs. These are *
 
 ### Shell Components
 
-Copy from `src/shell/components/` to `product-plan/shell/components/`:
+Copy from `src/shell/components/` to `product-plan/shell/components/` (using the selected platform's extension):
 
 - Transform import paths from `@/...` to relative paths
 - Remove any Design OS-specific imports
@@ -454,7 +454,7 @@ Copy from `src/shell/components/` to `product-plan/shell/components/`:
 
 ### Section Components
 
-For each section, copy from `src/sections/[section-id]/components/` to `product-plan/sections/[section-id]/components/`:
+For each section, copy from `src/sections/[section-id]/components/` to `product-plan/sections/[section-id]/components/` (using the selected platform's extension):
 
 - Transform import paths:
   - `@/../product/sections/[section-id]/types` → `../types`
@@ -900,7 +900,7 @@ Also review the section assets:
 
 - **@product-plan/sections/SECTION_ID/README.md** — Feature overview and design intent
 - **@product-plan/sections/SECTION_ID/tests.md** — UI behavior test specs
-- **@product-plan/sections/SECTION_ID/components/** — React components to integrate
+- **@product-plan/sections/SECTION_ID/components/** — platform components to integrate
 - **@product-plan/sections/SECTION_ID/types.ts** — TypeScript interfaces
 - **@product-plan/sections/SECTION_ID/sample-data.json** — Test data
 
@@ -1065,4 +1065,4 @@ The components are props-based and portable — they accept data and callbacks, 
 - Screenshots provide visual reference for fidelity checking
 - Sample data files are for testing before real APIs are built
 - The export is self-contained — no dependencies on Design OS
-- Components are portable — they work with any React setup
+- Components are portable — they work with matching framework setups

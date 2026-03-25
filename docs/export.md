@@ -81,9 +81,9 @@ product-plan/data-shapes/
 product-plan/shell/
 ├── README.md            # Design intent
 ├── components/
-│   ├── AppShell.tsx     # Main layout wrapper
-│   ├── MainNav.tsx      # Navigation
-│   ├── UserMenu.tsx     # User menu
+│   ├── ShellWrapper.[ext] # Main layout wrapper
+│   ├── MainNav.[ext]    # Navigation
+│   ├── UserMenu.[ext]   # User menu
 │   └── index.ts         # Exports
 └── screenshot.png       # Visual reference (if captured)
 ```
@@ -97,7 +97,7 @@ product-plan/sections/[section-id]/
 ├── README.md            # Feature overview, user flows
 ├── tests.md             # UI behavior test specs
 ├── components/
-│   ├── [Component].tsx  # Exportable components
+│   ├── [Component].[ext] # Exportable components
 │   └── index.ts         # Exports
 ├── types.ts             # TypeScript interfaces
 ├── sample-data.json     # Test data
@@ -119,12 +119,12 @@ These instructions describe WHAT to test, not HOW—your coding agent adapts the
 Exported components are:
 
 - **Props-based** — Accept data and callbacks via props, never import data directly
-- **Portable** — Work with any React setup, no Design OS dependencies
+- **Portable** — Work with a matching framework setup (React, Svelte, or Astro), no Design OS dependencies
 - **Complete** — Full styling, responsive design, dark mode support
 - **Production-ready** — Not prototypes or mockups
 
 ```tsx
-// Components expect data and callbacks as props
+// React-style example: components expect data and callbacks as props
 <InvoiceList
   invoices={data}
   onView={(id) => navigate(`/invoices/${id}`)}

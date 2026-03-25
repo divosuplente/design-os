@@ -31,7 +31,7 @@ You interact with Design OS through slash commands. Each command walks you throu
 - `/design-tokens` — Choose your color palette and typography
 - `/design-shell` — Design navigation and layout
 - `/shape-section` — Define a section's scope, requirements, and generate sample data + types
-- `/design-screen` — Create production-ready React components
+- `/design-screen` — Create production-ready platform components (`react`, `svelte`, or `astro`)
 - `/screenshot-design` — Snap a screenshot of a finished design screen for quick reference
 - `/export-product` — Generate the complete handoff package
 - `/product-roadmap` — Update your product sections (after initial creation)
@@ -48,7 +48,7 @@ See [Usage](usage.md) for the full workflow.
 ## Compatibility
 
 - Works with any AI coding agent: Claude Code, Cursor, Copilot, or anything that can implement from a handoff
-- Your frontend needs React and Tailwind CSS
+- Your frontend needs React, Svelte, or Astro (with Tailwind CSS)
 - Your backend can be anything—Rails, Laravel, Next.js, Python, whatever
 
 ## Open Source
