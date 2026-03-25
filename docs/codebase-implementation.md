@@ -95,7 +95,7 @@ Before finalizing any implementation plan, encourage your agent to review all pr
 
 The Design OS export provides:
 
-- **Finished UI components** — Props-based, fully styled, responsive, dark mode support
+- **Finished UI components** — Platform-specific (`react`, `svelte`, or `astro`), props-based, fully styled, responsive, dark mode support
 - **Product requirements** — Specs, user flows, and scope definitions
 - **Design system tokens** — Colors, typography, CSS custom properties
 - **Sample data** — Showing the shape of data components expect

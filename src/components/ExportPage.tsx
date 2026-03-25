@@ -200,7 +200,7 @@ export function ExportPage() {
                   />
                   <ExportItem
                     title="Components"
-                    description="React components and visual references for each section."
+                    description=\"Platform-specific components and visual references for each section.\"
                     items={['Shell components', 'Section components', 'Screenshots']}
                   />
                   <ExportItem

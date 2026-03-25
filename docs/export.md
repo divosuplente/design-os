@@ -88,6 +88,8 @@ product-plan/shell/
 └── screenshot.png       # Visual reference (if captured)
 ```
 
+`[ext]` is `tsx`, `svelte`, or `astro`, based on the platform selected when generating artifacts.
+
 ### Section Components
 
 For each section:
@@ -118,6 +120,7 @@ These instructions describe WHAT to test, not HOW—your coding agent adapts the
 
 Exported components are:
 
+- **Platform-specific** — Generated for the selected frontend target (`react`, `svelte`, or `astro`)
 - **Props-based** — Accept data and callbacks via props, never import data directly
 - **Portable** — Work with a matching framework setup (React, Svelte, or Astro), no Design OS dependencies
 - **Complete** — Full styling, responsive design, dark mode support

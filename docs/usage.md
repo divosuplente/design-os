@@ -44,7 +44,7 @@ See [Export](export.md) for details on what's included and how to use it.
 | `/design-tokens`     | Choose colors and typography                                             |
 | `/design-shell`      | Design navigation and layout                                             |
 | `/shape-section`     | Define a section's scope, requirements, and generate sample data + types |
-| `/design-screen`     | Create screen design components                                          |
+| `/design-screen`     | Create platform screen design components (`react`, `svelte`, or `astro`) |
 | `/screenshot-design` | Capture screenshots                                                      |
 | `/export-product`    | Generate the complete handoff package                                    |
 | `/product-roadmap`   | Update product sections (after initial creation)                         |
