@@ -1,0 +1,15 @@
+---
+name: export-product
+description: Use when a user asks to run the Design OS /export-product workflow or generate the full product-plan handoff package.
+---
+
+# export-product
+
+This skill is a Warp wrapper around the canonical command workflow in `.claude/commands/design-os/export-product.md`.
+
+## Execution rules
+
+1. Read `.claude/commands/design-os/export-product.md` fully before acting.
+2. Follow that workflow exactly, including prerequisite checks, stop conditions, and required user-facing copy.
+3. Keep `.claude/commands/design-os/export-product.md` unchanged unless the user explicitly asks to edit it.
+4. If this wrapper conflicts with the command file, the command file is the source of truth.
